@@ -8,7 +8,7 @@
     <style>
         body {
             margin: 0;
-            background: linear-gradient(135deg, #0f0a20 0%, #00000a 100%); /* Koyu uzay gradyanı */
+            background: linear-gradient(135deg, #0f0a20 0%, #00000a 100%);
             color: white;
             font-family: 'Montserrat', sans-serif;
             text-align: center;
@@ -16,7 +16,6 @@
             position: relative;
         }
 
-        /* --- HEADER STİLİ --- */
         .header {
             position: fixed;
             top: 0;
@@ -63,7 +62,6 @@
             z-index: 5;
         }
 
-        /* Galerinin kendisi, cam efektli bar */
         .gallery-bar {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -110,155 +108,18 @@
             margin-top: 50px;
             font-size: 1.5rem;
         }
-
-        /* Yeni eklenen panel ve ikon stilleri */
-        .dashboard-toggle {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #e57373;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            z-index: 10;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-        .dashboard-toggle:hover {
-            background-color: #d32f2f;
-            transform: scale(1.1);
-        }
-
-        .dashboard-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 20;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .dashboard-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            border-radius: 10px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-        }
-        .dashboard-content .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        input[type="file"] {
-            color: white;
-            padding: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        button.add-btn {
-            background-color: #e57373;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        button.add-btn:hover {
-            background-color: #d32f2f;
-        }
-
-        #photoList {
-            margin-top: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .photo-item {
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-        }
-
-        .photo-item img {
-            width: 100px;
-            height: 70px;
-            object-fit: cover;
-            border-radius: 5px;
-            display: block;
-        }
-
-        .delete-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: red;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 12px;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
+        
         /* --- Arka Plan Şekilleri --- */
         .bg-shape {
             position: fixed;
             filter: blur(60px);
             opacity: 0.6;
-            z-index: -1; /* İçerik ve galerinin arkasında kalsın */
+            z-index: -1;
             animation: floatAndGlow 15s infinite ease-in-out;
         }
 
         .bg-shape:nth-child(1) {
-            background: linear-gradient(135deg, #5e35b1 0%, #3949ab 100%); /* Mor-mavi nebula */
+            background: linear-gradient(135deg, #5e35b1 0%, #3949ab 100%);
             width: 350px;
             height: 350px;
             border-radius: 50%;
@@ -268,7 +129,7 @@
         }
 
         .bg-shape:nth-child(2) {
-            background: linear-gradient(135deg, #0088ff 0%, #00ffff 100%); /* Mavi nebula */
+            background: linear-gradient(135deg, #0088ff 0%, #00ffff 100%);
             width: 250px;
             height: 250px;
             border-radius: 50%;
@@ -279,7 +140,7 @@
         }
 
         .bg-shape:nth-child(3) {
-            background: linear-gradient(135deg, #ff6f00 0%, #ffc107 100%); /* Turuncu-sarı yıldız tozu */
+            background: linear-gradient(135deg, #ff6f00 0%, #ffc107 100%);
             width: 400px;
             height: 400px;
             border-radius: 50%;
@@ -364,113 +225,14 @@
         <div class="gallery-bar">
             <h1>Galeri</h1>
             <div class="gallery-container" id="galleryContainer">
+                
+                <div class="gallery-item">
+                    <img src="roverium.jpg">
                 </div>
+          
+
+            </div>
         </div>
     </div>
-
-    <div class="dashboard-toggle" id="toggleDashboard">
-        +
-    </div>
-
-    <div class="dashboard-panel" id="dashboardPanel">
-        <div class="dashboard-content">
-            <button class="close-btn" id="closeDashboard">&times;</button>
-            <h1>Galeri Paneli</h1>
-            <form id="uploadForm">
-                <label for="photoFile">Fotoğraf Ekle:</label>
-                <input type="file" id="photoFile" accept="image/*">
-                <button type="submit" class="add-btn">Galerime Ekle</button>
-            </form>
-            <h2>Eklenen Fotoğraflar</h2>
-            <div id="photoList">
-                </div>
-        </div>
-    </div>
-
-    <script>
-        const galleryContainer = document.getElementById('galleryContainer');
-        const toggleDashboard = document.getElementById('toggleDashboard');
-        const dashboardPanel = document.getElementById('dashboardPanel');
-        const closeDashboard = document.getElementById('closeDashboard');
-        const uploadForm = document.getElementById('uploadForm');
-        const photoFile = document.getElementById('photoFile');
-        const photoList = document.getElementById('photoList');
-
-        let galleryPhotos = JSON.parse(localStorage.getItem('galleryPhotos')) || [];
-
-        function renderGallery() {
-            galleryContainer.innerHTML = '';
-            if (galleryPhotos.length > 0) {
-                galleryPhotos.forEach(photoSrc => {
-                    const galleryItem = document.createElement('div');
-                    galleryItem.className = 'gallery-item';
-                    
-                    const img = document.createElement('img');
-                    img.src = photoSrc;
-                    img.alt = 'Galeri Fotoğrafı';
-
-                    galleryItem.appendChild(img);
-                    galleryContainer.appendChild(galleryItem);
-                });
-            } else {
-                galleryContainer.innerHTML = '<p class="no-photos">Henüz fotoğraf eklenmemiş.</p>';
-            }
-        }
-
-        function renderPhotoList() {
-            photoList.innerHTML = '';
-            galleryPhotos.forEach((photoSrc, index) => {
-                const photoItem = document.createElement('div');
-                photoItem.className = 'photo-item';
-                
-                const img = document.createElement('img');
-                img.src = photoSrc;
-                
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'delete-btn';
-                deleteBtn.textContent = 'X';
-                deleteBtn.onclick = () => deletePhoto(index);
-
-                photoItem.appendChild(img);
-                photoItem.appendChild(deleteBtn);
-                photoList.appendChild(photoItem);
-            });
-        }
-
-        function deletePhoto(index) {
-            galleryPhotos.splice(index, 1);
-            localStorage.setItem('galleryPhotos', JSON.stringify(galleryPhotos));
-            renderGallery();
-            renderPhotoList();
-        }
-
-        uploadForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const file = photoFile.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    galleryPhotos.push(event.target.result);
-                    localStorage.setItem('galleryPhotos', JSON.stringify(galleryPhotos));
-                    renderGallery();
-                    renderPhotoList();
-                };
-                reader.readAsDataURL(file);
-                uploadForm.reset();
-            }
-        });
-
-        toggleDashboard.addEventListener('click', () => {
-            dashboardPanel.style.display = 'flex';
-            renderPhotoList();
-        });
-
-        closeDashboard.addEventListener('click', () => {
-            dashboardPanel.style.display = 'none';
-        });
-
-        // Sayfa yüklendiğinde galeriyi render et
-        renderGallery();
-    </script>
 </body>
 </html>
