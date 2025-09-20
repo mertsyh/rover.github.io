@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Paneli | İKÜ ROVERIUM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            padding: 20px;
+            background-image: url('space.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        .dashboard-container {
+            max-width: 800px;
+            margin: 100px auto 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            color: white;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        button {
+            background-color: #e57373;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button:hover {
+            background-color: #d32f2f;
+        }
+
+        #photoList {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .photo-item {
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        .photo-item img {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive ayarlar */
+        @media (max-width: 600px) {
+            .dashboard-container {
+                margin: 50px auto 20px;
+                padding: 20px;
+            }
+            #photoList {
+                justify-content: space-around;
+            }
+            .photo-item {
+                width: 45%;
+                height: auto;
+            }
+            .photo-item img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h1>Galeri Paneli</h1>
+        <form id="uploadForm">
+            <label for="photoFile">Fotoğraf Ekle:</label>
+            <input type="file" id="photoFile" accept="image/*">
+            <button type="submit">Galerime Ekle</button>
+        </form>
+
+        <h2>Eklenen Fotoğraflar</h2>
+        <div id="photoList">
+            </div>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const photoFile = document.getElementById('photoFile');
+        const photoList = document.getElementById('photoList');
+        let galleryPhotos = JSON.parse(localStorage.getItem('galleryPhotos')) || [];
+
+        function renderPhotos() {
+            photoList.innerHTML = '';
+            galleryPhotos.forEach((photoSrc, index) => {
+                const photoItem = document.createElement('div');
+                photoItem.className = 'photo-item';
+                
+                const img = document.createElement('img');
+                img.src = photoSrc;
+                img.alt = 'Galeri Fotoğrafı';
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.textContent = 'X';
+                deleteBtn.onclick = () => deletePhoto(index);
+
+                photoItem.appendChild(img);
+                photoItem.appendChild(deleteBtn);
+                photoList.appendChild(photoItem);
+            });
+        }
+
+        function deletePhoto(index) {
+            galleryPhotos.splice(index, 1);
+            localStorage.setItem('galleryPhotos', JSON.stringify(galleryPhotos));
+            renderPhotos();
+        }
+
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const file = photoFile.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    galleryPhotos.push(event.target.result);
+                    localStorage.setItem('galleryPhotos', JSON.stringify(galleryPhotos));
+                    renderPhotos();
+                };
+                reader.readAsDataURL(file);
+                uploadForm.reset();
+            }
+        });
+
+        // Sayfa yüklendiğinde mevcut fotoğrafları render et
+        renderPhotos();
+    </script>
+</body>
+</html>
