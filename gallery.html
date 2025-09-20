@@ -52,7 +52,6 @@
             color: #ccc;
         }
 
-        /* Arka plan gradyanını direkt galeri wrapper'a uyguladım. */
         .gallery-wrapper {
             padding: 120px 20px 50px;
             display: flex;
@@ -61,7 +60,6 @@
             justify-content: center;
             position: relative;
             z-index: 5;
-            background: linear-gradient(135deg, #2b1c4a 0%, #171129 100%); /* Sabit arka plan */
         }
 
         .gallery-bar {
@@ -111,10 +109,71 @@
             font-size: 1.5rem;
         }
         
+        /* --- Arka Plan Şekilleri --- */
         .bg-shape {
-            display: none; /* Bu şekilleri sadece ana sayfada kullanalım */
+            position: fixed;
+            filter: blur(60px);
+            opacity: 0.6;
+            z-index: -1;
+            animation: floatAndGlow 15s infinite ease-in-out;
+        }
+
+        .bg-shape:nth-child(1) {
+            background: linear-gradient(135deg, #5e35b1 0%, #3949ab 100%);
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .bg-shape:nth-child(2) {
+            background: linear-gradient(135deg, #0088ff 0%, #00ffff 100%);
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            top: 60%;
+            right: 5%;
+            transform: translateY(-50%) rotate(45deg);
+            animation-delay: 5s;
+        }
+
+        .bg-shape:nth-child(3) {
+            background: linear-gradient(135deg, #ff6f00 0%, #ffc107 100%);
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            bottom: -5%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes floatAndGlow {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translate(20px, -20px) scale(1.05) rotate(10deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(0, -40px) scale(1) rotate(0deg);
+                opacity: 0.6;
+            }
+            75% {
+                transform: translate(-20px, -20px) scale(1.05) rotate(-10deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 0.6;
+            }
         }
         
+        /* --- MOBİL UYUMLULUK AYARLARI --- */
         @media (max-width: 768px) {
             .header {
                 padding: 15px 20px;
@@ -138,6 +197,8 @@
             }
             .gallery-wrapper {
                 padding-top: 120px;
+                /* Mobil için özel arka plan gradyanı */
+                background: linear-gradient(135deg, #2b1c4a 0%, #171129 100%);
             }
             .gallery-bar {
                 width: 95%;
@@ -150,6 +211,10 @@
                 width: calc(50% - 10px);
                 height: 120px;
             }
+            /* Mobil cihazlarda arka plan şekillerini gizle */
+            .bg-shape {
+                display: none;
+            }
         }
 
         @media (max-width: 480px) {
@@ -161,6 +226,10 @@
     </style>
 </head>
 <body>
+    
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
     
     <header class="header">
         <a href="index.html" class="logo">İKÜ ROVERIUM</a>
