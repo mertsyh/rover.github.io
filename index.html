@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROVERIUM | ANA SAYFA</title>
+    <title>ROVERIUM| ANA SAYFA</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             min-height: 100vh;
-            background: linear-gradient(135deg, #050510 0%, #000000 100%); /* Daha nötr bir arka plan gradyanı */
+            background: linear-gradient(135deg, #050510 0%, #000000 100%);
             overflow-x: hidden;
             color: white;
             font-family: 'Montserrat', sans-serif;
@@ -51,9 +51,20 @@
             text-decoration: none;
             color: white;
             transition: color 0.3s;
+            display: flex; /* Logo ve yazıyı yan yana hizalamak için */
+            align-items: center; /* Dikeyde ortalamak için */
+            gap: 10px; /* Logo ile yazı arasına boşluk */
         }
         .header .logo:hover {
             color: #ccc;
+        }
+        .header .logo img {
+            height: 40px; /* Logo boyutunu ayarla */
+            width: auto;
+            transition: transform 0.3s;
+        }
+        .header .logo:hover img {
+            transform: scale(1.1);
         }
         .header nav a {
             color: white;
@@ -191,7 +202,7 @@
             animation: bounce-up 2s infinite;
         }
 
-       
+        /* Topluluk barı için cam efekti stilleri */
         .community-bar {
             background: rgba(255, 255, 255, 0.31);
             border-radius: 16px;
@@ -210,6 +221,7 @@
             margin: 0 auto;
         }
 
+        /* --- MOBİL UYUMLULUK AYARLARI --- */
         @media (max-width: 768px) {
             .header {
                 padding: 15px 20px;
@@ -223,6 +235,12 @@
             }
             .header nav a {
                 margin: 0 10px;
+            }
+            .header .logo {
+                font-size: 1.2rem;
+            }
+            .header .logo img {
+                height: 30px; /* Mobil için logo boyutunu küçülttük */
             }
             h1 {
                 font-size: 1.5rem;
@@ -244,7 +262,10 @@
 <body>
     
     <header class="header">
-        <a href="#" class="logo">İKÜ ROVERIUM</a>
+        <a href="#" class="logo">
+            <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="İKÜ ROVERIUM Logo">
+            İKÜ ROVERIUM
+        </a>
         <nav>
             <a href="#">Ana Sayfa</a>
             <a href="gallery.html">Galeri</a>
@@ -300,7 +321,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
     <script>
-      
+        // --- SAHNE KURULUMU ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mars"), antialias: true, alpha: true });
@@ -309,25 +330,26 @@
         // --- Doku Yükleyici ---
         const textureLoader = new THREE.TextureLoader();
 
+        // --- MARS KÜRESİ VE DOKUSU ---
         const marsTexture = textureLoader.load("mars.jpg");
-        const geometry = new THREE.SphereGeometry(10, 128, 128); 
+        const geometry = new THREE.SphereGeometry(10, 128, 128);
         const material = new THREE.MeshStandardMaterial({ map: marsTexture, transparent: true });
         const mars = new THREE.Mesh(geometry, material);
         scene.add(mars);
 
-     
+        // --- ATMOSFER KÜRESİ ---
         const atmosphereGeometry = new THREE.SphereGeometry(10.2, 128, 128);
         const atmosphereMaterial = new THREE.MeshStandardMaterial({
-            color: 0x909090, // Mavi ton yerine daha nötr bir gri ton
+            color: 0x909090,
             transparent: true,
-            opacity: 0.1, // Daha az belirgin bir atmosfer
+            opacity: 0.1,
             depthWrite: false
         });
         const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
         scene.add(atmosphere);
         atmosphere.position.copy(mars.position);
 
-       
+        // --- YILDIZLAR OLUŞTURMA ---
         function addStars() {
             const starsGeometry = new THREE.BufferGeometry();
             const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
@@ -347,7 +369,7 @@
         }
         const stars = addStars();
 
-
+        // --- IŞIKLANDIRMA ---
         const light = new THREE.PointLight(0xffffff, 1.5);
         light.position.set(20, 20, 50);
         scene.add(light);
@@ -358,15 +380,17 @@
         camera.position.set(0, 0, 30);
         camera.lookAt(mars.position);
 
+        // --- ANIMASYON DÖNGÜSÜ ---
         function animate() {
             requestAnimationFrame(animate);
-            mars.rotation.y += 0.0001; 
+            mars.rotation.y += 0.0001;
             atmosphere.rotation.y += 0.0001;
             stars.rotation.y += 0.00005;
             renderer.render(scene, camera);
         }
         animate();
 
+        // --- PENCERE BOYUTU DEĞİŞTİRME FONKSİYONU ---
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -374,6 +398,7 @@
         }
         window.addEventListener("resize", onWindowResize);
 
+        // --- GSAP VE SCROLLTRIGGER İLE KAYDIRMA ANIMASYONU ---
         gsap.registerPlugin(ScrollTrigger);
 
         const tl = gsap.timeline({
@@ -385,7 +410,7 @@
             }
         });
 
-     
+        // Mars küresine yakınlaşma ve transparanlaşma aşaması
         tl.to(camera.position, {
             z: 2.5,
             ease: "power1.inOut"
@@ -399,12 +424,14 @@
             ease: "power1.in"
         }, 0.5);
 
+        // Mars ve atmosferi ekran dışına çıkar
         tl.to([mars.position, atmosphere.position], {
             y: -200,
             x: 0,
             ease: "power2.in"
         }, 1);
 
+        // Diğer içerik animasyonları
         gsap.to(".page-section", {
             scrollTrigger: {
                 trigger: ".page-section",
@@ -417,6 +444,7 @@
             ease: "power2.out"
         });
 
+        // Footer'ın görünür hale gelmesi için ScrollTrigger
         gsap.to(".footer", {
             scrollTrigger: {
                 trigger: ".footer",
@@ -428,8 +456,7 @@
             duration: 1,
             ease: "power2.out"
         });
-        
-     
+
         const scrollButton = document.getElementById("scrollDownButton");
         const sections = [
             document.getElementById("community-section"),
