@@ -9,7 +9,7 @@
    
 </head>
 <body>
-    <!-- LOADING EKRANI -->
+ 
 <div id="loading-screen">
   <div class="spinner"></div>
   <p>Yükleniyor...</p>
@@ -47,60 +47,28 @@
     </section>
 
     <section class="page-section" id="contact">
-        <h2>Bizimle İletişime Geçin</h2>
-        <p>Sorularınız mı var? Ekibimize ulaşmak için aşağıdaki formu kullanın.</p>
-      
-<!-- HIDDEN IFRAME -->
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <h2>Bizimle İletişime Geçin</h2>
+    <p>Sorularınız mı var? Ekibimize ulaşmak için aşağıdaki formu kullanın.</p>
+  
+    <form id="contactForm" action="https://formspree.io/f/xanpanew" method="POST">
+        <label>Ad Soyad</label><br><br>
+        <input type="text" name="name" required><br>
 
-<form id="contactForm" target="hidden_iframe"
-      action="https://docs.google.com/forms/d/e/1FAIpQLSfI2PJmOdqVw3ALDQvD2YkoPjBEuMTF1yIDtIt-yiXzAkPOzA/formResponse"
-      method="POST">
-  <label>Ad Soyad</label><br>
-  <input type="text" name="entry.733679472" required><br>
+        <label>E-posta</label><br><br>
+        <input type="email" name="email" required><br>
 
-  <label>E-posta</label><br>
-  <input type="email" name="entry.1642127522" required><br>
+        <label>Mesaj</label><br><br>
+        <textarea name="message" rows="5"></textarea><br><br>
 
-  <label>Mesaj</label><br>
-  <textarea name="entry.1480862831" rows="5"></textarea><br>
+        <button type="submit">Gönder</button>
+        <p id="successMessage" style="display:none; color:lightgreen; margin-top:15px;">
+            Mesajınız başarıyla gönderildi, teşekkür ederiz! 🚀
+        </p>
+    </form>
+</section>
 
-  <input type="hidden" name="dlut" value="1760479238224">
 
-  <button type="submit" id="sendBtn">Gönder</button>
-</form>
 
-<p id="successMessage" style="display:none; color:lightgreen; margin-top:10px;">
-  Mesajınız başarıyla gönderildi! 🚀
-</p>
-
-<script>
-const form = document.getElementById('contactForm');
-const sendBtn = document.getElementById('sendBtn');
-const successMsg = document.getElementById('successMessage');
-const iframe = document.getElementById('hidden_iframe');
-
-form.addEventListener('submit', function(e) {
-  // Sayfa yenilenmesini engelleme
-  sendBtn.disabled = true;
-  sendBtn.textContent = 'Gönderiliyor...';
-
-  // iframe yüklenince başarı mesajı göster
-  iframe.onload = function() {
-    successMsg.style.display = 'block';
-    form.reset();
-    sendBtn.textContent = 'Gönder';
-    sendBtn.disabled = false;
-
-    setTimeout(() => {
-      successMsg.style.display = 'none';
-    }, 5000);
-
-    // iframe onload'u bir kere çalışsın
-    iframe.onload = null;
-  };
-});
-</script>
 
 
         </div>
@@ -121,30 +89,55 @@ window.addEventListener("load", () => {
   const alreadyVisited = localStorage.getItem("visited");
 
   if (!alreadyVisited) {
-    // İlk ziyaret — loading ekranı göster
+  
     setTimeout(() => {
       loadingScreen.classList.add("hidden");
       localStorage.setItem("visited", "true");
     }, 1500);
   } else {
-    // Daha önce ziyaret edilmiş — loading ekranını direkt gizle
+
     loadingScreen.classList.add("hidden");
   }
 });
 </script>
-
 <script>
-    // --- SAHNE KURULUMU ---
+const form = document.getElementById("contactForm");
+const successMessage = document.getElementById("successMessage");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault(); 
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+            successMessage.style.display = "block";
+            form.reset();
+        } else {
+            alert("Bir hata oluştu, lütfen tekrar deneyin.");
+        }
+    } catch (error) {
+        alert("Bir hata oluştu, lütfen tekrar deneyin.");
+    }
+});
+</script>
+<script>
+ 
     
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mars"), antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // --- Doku Yükleyici ---
+
     const textureLoader = new THREE.TextureLoader();
 
-    // --- MARS KÜRESİ VE DOKUSU ---
+  
     const geometry = new THREE.SphereGeometry(10, 64, 64);
     const marsTexture = textureLoader.load("mars.jpg", () => {
         initAnimations();
@@ -153,7 +146,6 @@ window.addEventListener("load", () => {
     const mars = new THREE.Mesh(geometry, material);
     scene.add(mars);
 
-    // --- ATMOSFER KÜRESİ ---
     const atmosphereGeometry = new THREE.SphereGeometry(10.2, 64, 64);
     const atmosphereMaterial = new THREE.MeshStandardMaterial({
         color: 0x909090,
@@ -165,7 +157,7 @@ window.addEventListener("load", () => {
     scene.add(atmosphere);
     atmosphere.position.copy(mars.position);
 
-    // --- YILDIZLAR OLUŞTURMA ---
+ 
     function addStars() {
         const starsGeometry = new THREE.BufferGeometry();
         const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
@@ -183,25 +175,25 @@ window.addEventListener("load", () => {
     }
     const stars = addStars();
 
-    // --- IŞIKLANDIRMA ---
+
     const light = new THREE.PointLight(0xffffff, 1.5);
     light.position.set(20, 20, 50);
     scene.add(light);
     const ambientLight = new THREE.AmbientLight(0x404040);
     scene.add(ambientLight);
 
-    // --- KAMERA KONUMU ---
+
     camera.position.set(0, 0, 30);
     camera.lookAt(mars.position);
 
-    // --- ANIMASYON DÖNGÜSÜ ---
+
     function animate() {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
     }
     animate();
 
-    // --- PENCERE BOYUTU DEĞİŞTİRME FONKSİYONU ---
+ 
     window.addEventListener("resize", () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -232,11 +224,11 @@ window.addEventListener("load", () => {
         marsTimeline.to([mars.rotation, atmosphere.rotation], { x: 1, ease: "power2.inOut" }, 0); 
         
       marsTimeline.to([mars.scale, atmosphere.scale], {
-    x: 15, y: 15, z: 15, // Değerleri 50'den 15'e düşürdük.
+    x: 15, y: 15, z: 15, 
     ease: "power2.in"
 }, "<0.2");
 
-        // Aşama 3: Büyüme animasyonuyla aynı anda şeffaflaşarak kaybolur.
+    
         marsTimeline.to([mars.material, atmosphere.material], {
             opacity: 0,
             ease: "power2.in"
