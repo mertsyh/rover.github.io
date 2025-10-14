@@ -5,262 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROVERIUM | ANA SAYFA</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #050510 0%, #000000 100%);
-            overflow-x: hidden;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            text-align: center;
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            transition: background-color 1s ease-in-out;
-            position: relative;
-        }
-        canvas {
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            opacity: 1;
-        }
-
-        /* --- HEADER STİLİ --- */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 50px;
-            box-sizing: border-box;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-            color: white;
-            transition: color 0.3s;
-            display: flex; /* Logo ve yazıyı yan yana hizalamak için */
-            align-items: center; /* Dikeyde ortalamak için */
-            gap: 10px; /* Logo ile yazı arasına boşluk */
-        }
-        .header .logo:hover {
-            color: #ccc;
-        }
-        .header .logo img {
-            height: 40px; /* Logo boyutunu ayarla */
-            width: auto;
-            transition: transform 0.3s;
-        }
-        .header .logo:hover img {
-            transform: scale(1.1);
-        }
-        .header nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-        .header nav a:hover {
-            color: #ccc;
-        }
-
-        /* Tüm içerik bölümleri için temel stil */
-        .page-section {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 50px 20px;
-            box-sizing: border-box;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s, transform 1s;
-        }
-        .page-section.content {
-             opacity: 1;
-             transform: translateY(0);
-        }
-        
-        .contact-form {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            border-radius: 10px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            text-align: left;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-        }
-        .contact-form label, .contact-form input, .contact-form textarea, .contact-form button {
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-        .contact-form input, .contact-form textarea {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            color: white;
-        }
-        .contact-form button {
-            background-color: #e57373;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        .contact-form button:hover {
-            background-color: #d32f2f;
-        }
-
-        .footer {
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #888;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s, transform 1s;
-        }
-
-        /* Kaydırma oku stili */
-        .scroll-indicator {
-            position: fixed;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: white;
-            font-size: 1rem;
-            opacity: 1;
-            transition: opacity 0.5s;
-            z-index: 5;
-            cursor: pointer;
-        }
-        .scroll-indicator .arrow {
-            width: 30px;
-            height: 30px;
-            border: solid white;
-            opacity: 0.7;
-            border-width: 0 3px 3px 0;
-            display: inline-block;
-            padding: 3px;
-            transform: rotate(45deg);
-            margin-top: 10px;
-            animation: bounce 2s infinite;
-            transition: transform 0.5s ease-in-out;
-        }
-        .scroll-indicator.up .arrow {
-            transform: rotate(-135deg);
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) rotate(45deg);
-            }
-            40% {
-                transform: translateY(10px) rotate(45deg);
-            }
-            60% {
-                transform: translateY(5px) rotate(45deg);
-            }
-        }
-        @keyframes bounce-up {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) rotate(-135deg);
-            }
-            40% {
-                transform: translateY(-10px) rotate(-135deg);
-            }
-            60% {
-                transform: translateY(-5px) rotate(-135deg);
-            }
-        }
-        .scroll-indicator.up .arrow {
-            animation: bounce-up 2s infinite;
-        }
-
-        /* Topluluk barı için cam efekti stilleri */
-        .community-bar {
-            background: rgba(255, 255, 255, 0.31);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10.3px);
-            -webkit-backdrop-filter: blur(10.3px);
-            border: 1px solid rgba(255, 255, 255, 0.96);
-            padding: 40px;
-            max-width: 800px;
-            width: 90%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-        }
-
-        /* --- MOBİL UYUMLULUK AYARLARI --- */
-        @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-            }
-            .header nav {
-                margin-top: 10px;
-            }
-            .header nav a {
-                margin: 0 10px;
-            }
-            .header .logo {
-                font-size: 1.2rem;
-            }
-            .header .logo img {
-                height: 30px; /* Mobil için logo boyutunu küçülttük */
-            }
-            h1 {
-                font-size: 1.5rem;
-            }
-            p {
-                font-size: 0.9rem;
-            }
-            .content {
-                padding: 0 10px;
-            }
-            .community-bar, .contact-form {
-                padding: 20px;
-                margin-top: 50px;
-                width: 95%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+   
 </head>
 <body>
-    
+    <!-- LOADING EKRANI -->
+<div id="loading-screen">
+  <div class="spinner"></div>
+  <p>Yükleniyor...</p>
+</div>
+
     <header class="header">
         <a href="#" class="logo">
             <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="İKÜ ROVERIUM Logo">
@@ -292,27 +46,68 @@
         </div>
     </section>
 
-    <section class="page-section section" id="contact">
+    <section class="page-section" id="contact">
         <h2>Bizimle İletişime Geçin</h2>
         <p>Sorularınız mı var? Ekibimize ulaşmak için aşağıdaki formu kullanın.</p>
-        <div class="contact-form">
-            <form>
-                <label for="name">Adınız:</label>
-                <input type="text" id="name" name="name" required>
-                
-                <label for="email">E-posta Adresiniz:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="message">Mesajınız:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-                
-                <button type="submit">Gönder</button>
-            </form>
+      
+<!-- HIDDEN IFRAME -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+<form id="contactForm" target="hidden_iframe"
+      action="https://docs.google.com/forms/d/e/1FAIpQLSfI2PJmOdqVw3ALDQvD2YkoPjBEuMTF1yIDtIt-yiXzAkPOzA/formResponse"
+      method="POST">
+  <label>Ad Soyad</label><br>
+  <input type="text" name="entry.733679472" required><br>
+
+  <label>E-posta</label><br>
+  <input type="email" name="entry.1642127522" required><br>
+
+  <label>Mesaj</label><br>
+  <textarea name="entry.1480862831" rows="5"></textarea><br>
+
+  <input type="hidden" name="dlut" value="1760479238224">
+
+  <button type="submit" id="sendBtn">Gönder</button>
+</form>
+
+<p id="successMessage" style="display:none; color:lightgreen; margin-top:10px;">
+  Mesajınız başarıyla gönderildi! 🚀
+</p>
+
+<script>
+const form = document.getElementById('contactForm');
+const sendBtn = document.getElementById('sendBtn');
+const successMsg = document.getElementById('successMessage');
+const iframe = document.getElementById('hidden_iframe');
+
+form.addEventListener('submit', function(e) {
+  // Sayfa yenilenmesini engelleme
+  sendBtn.disabled = true;
+  sendBtn.textContent = 'Gönderiliyor...';
+
+  // iframe yüklenince başarı mesajı göster
+  iframe.onload = function() {
+    successMsg.style.display = 'block';
+    form.reset();
+    sendBtn.textContent = 'Gönder';
+    sendBtn.disabled = false;
+
+    setTimeout(() => {
+      successMsg.style.display = 'none';
+    }, 5000);
+
+    // iframe onload'u bir kere çalışsın
+    iframe.onload = null;
+  };
+});
+</script>
+
+
         </div>
     </section>
 
     <footer class="footer">
-        <p>&copy; 2025 İstanbul Kültür Üniversitesi Mars Rover Takımı. Tüm Hakları Saklıdır.</p>
+        <p>&copy; 2025 İstanbul Kültür Üniversitesi Roverium Tüm Hakları Saklıdır.</p>
     </footer>
 
 
@@ -320,132 +115,156 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
-    <script>
-        // --- SAHNE KURULUMU ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mars"), antialias: true, alpha: true });
+<script>
+window.addEventListener("load", () => {
+  const loadingScreen = document.getElementById("loading-screen");
+  const alreadyVisited = localStorage.getItem("visited");
+
+  if (!alreadyVisited) {
+    // İlk ziyaret — loading ekranı göster
+    setTimeout(() => {
+      loadingScreen.classList.add("hidden");
+      localStorage.setItem("visited", "true");
+    }, 1500);
+  } else {
+    // Daha önce ziyaret edilmiş — loading ekranını direkt gizle
+    loadingScreen.classList.add("hidden");
+  }
+});
+</script>
+
+<script>
+    // --- SAHNE KURULUMU ---
+    
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mars"), antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // --- Doku Yükleyici ---
+    const textureLoader = new THREE.TextureLoader();
+
+    // --- MARS KÜRESİ VE DOKUSU ---
+    const geometry = new THREE.SphereGeometry(10, 64, 64);
+    const marsTexture = textureLoader.load("mars.jpg", () => {
+        initAnimations();
+    });
+    const material = new THREE.MeshStandardMaterial({ map: marsTexture, transparent: true });
+    const mars = new THREE.Mesh(geometry, material);
+    scene.add(mars);
+
+    // --- ATMOSFER KÜRESİ ---
+    const atmosphereGeometry = new THREE.SphereGeometry(10.2, 64, 64);
+    const atmosphereMaterial = new THREE.MeshStandardMaterial({
+        color: 0x909090,
+        transparent: true,
+        opacity: 0.1,
+        depthWrite: false
+    });
+    const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+    scene.add(atmosphere);
+    atmosphere.position.copy(mars.position);
+
+    // --- YILDIZLAR OLUŞTURMA ---
+    function addStars() {
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
+        const starVertices = [];
+        for (let i = 0; i < 1500; i++) {
+            const x = THREE.MathUtils.randFloatSpread(200);
+            const y = THREE.MathUtils.randFloatSpread(200);
+            const z = THREE.MathUtils.randFloatSpread(200);
+            starVertices.push(x, y, z);
+        }
+        starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+        return stars;
+    }
+    const stars = addStars();
+
+    // --- IŞIKLANDIRMA ---
+    const light = new THREE.PointLight(0xffffff, 1.5);
+    light.position.set(20, 20, 50);
+    scene.add(light);
+    const ambientLight = new THREE.AmbientLight(0x404040);
+    scene.add(ambientLight);
+
+    // --- KAMERA KONUMU ---
+    camera.position.set(0, 0, 30);
+    camera.lookAt(mars.position);
+
+    // --- ANIMASYON DÖNGÜSÜ ---
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // --- PENCERE BOYUTU DEĞİŞTİRME FONKSİYONU ---
+    window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+    });
 
-        // --- Doku Yükleyici ---
-        const textureLoader = new THREE.TextureLoader();
-
-        // --- MARS KÜRESİ VE DOKUSU ---
-        const marsTexture = textureLoader.load("mars.jpg");
-        const geometry = new THREE.SphereGeometry(10, 128, 128);
-        const material = new THREE.MeshStandardMaterial({ map: marsTexture, transparent: true });
-        const mars = new THREE.Mesh(geometry, material);
-        scene.add(mars);
-
-        // --- ATMOSFER KÜRESİ ---
-        const atmosphereGeometry = new THREE.SphereGeometry(10.2, 128, 128);
-        const atmosphereMaterial = new THREE.MeshStandardMaterial({
-            color: 0x909090,
-            transparent: true,
-            opacity: 0.1,
-            depthWrite: false
-        });
-        const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-        scene.add(atmosphere);
-        atmosphere.position.copy(mars.position);
-
-        // --- YILDIZLAR OLUŞTURMA ---
-        function addStars() {
-            const starsGeometry = new THREE.BufferGeometry();
-            const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
-            const starVertices = [];
-            const starCount = 1500;
-
-            for (let i = 0; i < starCount; i++) {
-                const x = THREE.MathUtils.randFloatSpread(200);
-                const y = THREE.MathUtils.randFloatSpread(200);
-                const z = THREE.MathUtils.randFloatSpread(200);
-                starVertices.push(x, y, z);
-            }
-            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-            const stars = new THREE.Points(starsGeometry, starsMaterial);
-            scene.add(stars);
-            return stars;
-        }
-        const stars = addStars();
-
-        // --- IŞIKLANDIRMA ---
-        const light = new THREE.PointLight(0xffffff, 1.5);
-        light.position.set(20, 20, 50);
-        scene.add(light);
-        const ambientLight = new THREE.AmbientLight(0x404040);
-        scene.add(ambientLight);
-
-        // --- KAMERA KONUMU ---
-        camera.position.set(0, 0, 30);
-        camera.lookAt(mars.position);
-
-        // --- ANIMASYON DÖNGÜSÜ ---
-        function animate() {
-            requestAnimationFrame(animate);
-            mars.rotation.y += 0.0001;
-            atmosphere.rotation.y += 0.0001;
-            stars.rotation.y += 0.00005;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // --- PENCERE BOYUTU DEĞİŞTİRME FONKSİYONU ---
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-        window.addEventListener("resize", onWindowResize);
-
-        // --- GSAP VE SCROLLTRIGGER İLE KAYDIRMA ANIMASYONU ---
+    function initAnimations() {
         gsap.registerPlugin(ScrollTrigger);
 
-        const tl = gsap.timeline({
+        const rotationTween = gsap.to([mars.rotation, atmosphere.rotation, stars.rotation], {
+            y: Math.PI * 2,
+            duration: 200,
+            repeat: -1,
+            ease: "none"
+        });
+
+        const marsTimeline = gsap.timeline({
             scrollTrigger: {
                 trigger: "body",
                 start: "top top",
                 end: "bottom bottom",
-                scrub: true,
+                scrub: 1.5,
+                markers: false
             }
         });
 
-        // Mars küresine yakınlaşma ve transparanlaşma aşaması
-        tl.to(camera.position, {
-            z: 2.5,
-            ease: "power1.inOut"
-        }, 0);
-        tl.to(mars.material, {
-            opacity: 0,
-            ease: "power1.in"
-        }, 0.5);
-        tl.to(atmosphere.material, {
-            opacity: 0,
-            ease: "power1.in"
-        }, 0.5);
+        marsTimeline.to(camera.position, { z: 15, ease: "power2.inOut" }, 0);
+        marsTimeline.to([mars.rotation, atmosphere.rotation], { x: 1, ease: "power2.inOut" }, 0); 
+        
+      marsTimeline.to([mars.scale, atmosphere.scale], {
+    x: 15, y: 15, z: 15, // Değerleri 50'den 15'e düşürdük.
+    ease: "power2.in"
+}, "<0.2");
 
-        // Mars ve atmosferi ekran dışına çıkar
-        tl.to([mars.position, atmosphere.position], {
-            y: -200,
-            x: 0,
+        // Aşama 3: Büyüme animasyonuyla aynı anda şeffaflaşarak kaybolur.
+        marsTimeline.to([mars.material, atmosphere.material], {
+            opacity: 0,
             ease: "power2.in"
-        }, 1);
+        }, "<");
 
-        // Diğer içerik animasyonları
-        gsap.to(".page-section", {
-            scrollTrigger: {
-                trigger: ".page-section",
-                start: "top 80%",
-                toggleActions: "play none none none"
-            },
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power2.out"
+
+        ScrollTrigger.create({
+            trigger: "#community-section",
+            start: "top center",
+            onEnter: () => rotationTween.pause(),
+            onLeaveBack: () => rotationTween.resume()
         });
 
-        // Footer'ın görünür hale gelmesi için ScrollTrigger
-        gsap.to(".footer", {
+        document.querySelectorAll(".page-section").forEach(section => {
+             gsap.fromTo(section, { opacity: 0, y: 50 }, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out"
+             });
+        });
+
+        gsap.fromTo(".footer", { opacity: 0, y: 20 }, {
             scrollTrigger: {
                 trigger: ".footer",
                 start: "top 95%",
@@ -458,41 +277,45 @@
         });
 
         const scrollButton = document.getElementById("scrollDownButton");
-        const sections = [
-            document.getElementById("community-section"),
-            document.getElementById("contact")
-        ];
+        const communitySection = document.getElementById("community-section");
+        const contactSection = document.getElementById("contact");
         
-        let currentSectionIndex = 0;
+        const sections = [communitySection, contactSection];
+        let nextSectionIndex = 0;
 
         if (scrollButton) {
             scrollButton.addEventListener("click", () => {
-                if (currentSectionIndex < sections.length) {
-                    sections[currentSectionIndex].scrollIntoView({ behavior: "smooth" });
-                    currentSectionIndex++;
+                if (scrollButton.classList.contains("up")) {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                 } else {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
-                    });
-                    currentSectionIndex = 0;
+                    if (sections[nextSectionIndex]) {
+                        sections[nextSectionIndex].scrollIntoView({ behavior: "smooth" });
+                    }
                 }
             });
 
-            window.addEventListener("scroll", () => {
-                const contactSection = document.getElementById("contact");
-                const rect = contactSection.getBoundingClientRect();
-                
-                if (rect.top <= 100) { 
+            ScrollTrigger.create({
+                trigger: communitySection,
+                start: "top center",
+                end: "bottom center",
+                onEnter: () => { nextSectionIndex = 1; },
+                onLeaveBack: () => { nextSectionIndex = 0; }
+            });
+
+            ScrollTrigger.create({
+                trigger: contactSection,
+                start: "top center",
+                onEnter: () => {
                     scrollButton.classList.add("up");
                     scrollButton.querySelector('span').textContent = "Yukarı Çık";
-                } else {
+                },
+                onLeaveBack: () => {
                     scrollButton.classList.remove("up");
                     scrollButton.querySelector('span').textContent = "Aşağı Kaydır";
                 }
             });
         }
-    </script>
+    }
+</script>
 </body>
 </html>
-
