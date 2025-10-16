@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROVERIUM | Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        background: linear-gradient(135deg, #050510 0%, #000000 100%);
+        color: white;
+        min-height: 100vh;
+    }
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 50px;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .header .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .header .logo img { height: 40px; width:auto; }
+    .header nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 30px;
+        font-size: 1rem;
+    }
+    .header nav a:hover { color: #ccc; }
+
+    #blog-container {
+        max-width: 900px;
+        margin: 120px auto 50px;
+        padding: 0 15px;
+    }
+
+    .blog-post {
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 40px;
+        text-align: left;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+    }
+
+    .blog-post h3 { margin-top: 0; color: #ffad60; }
+    .blog-post small { color: #aaa; display: block; margin-bottom: 10px; }
+
+    .visible { opacity: 1 !important; transform: translateY(0) !important; }
+
+    @media (max-width: 768px) {
+        .header { flex-direction: column; padding: 15px 20px; }
+        .header nav { margin-top: 10px; }
+        .header nav a { margin: 0 10px; }
+        #blog-container { margin-top: 100px; }
+    }
+</style>
+</head>
+<body>
+<header class="header">
+    <a href="index.html" class="logo">
+        <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="Logo">
+        İKÜ ROVERIUM
+    </a>
+    <nav>
+        <a href="index.html">Ana Sayfa</a>
+        <a href="gallery.html">Galeri</a>
+    </nav>
+</header>
+
+<section id="blog-container"></section>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+// --- Firebase config ---
+const firebaseConfig = {
+  apiKey: "AIzaSyC7wHvnllwQMrM34daOU_V58lNfnOogVYk",
+  authDomain: "roverium-4f3db.firebaseapp.com",
+  projectId: "roverium-4f3db",
+  storageBucket: "roverium-4f3db.firebasestorage.app",
+  messagingSenderId: "1063901094879",
+  appId: "1:1063901094879:web:6d257de2ee99e7abfe5a6a",
+  measurementId: "G-R0EHN6ECNK"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const container = document.getElementById('blog-container');
+
+async function loadPosts() {
+  try {
+    const postsQuery = query(
+      collection(db, "posts"),
+      where("published", "==", true)
+    );
+    const snap = await getDocs(postsQuery);
+
+    if (snap.empty) {
+      container.innerHTML = "<p>Henüz yayınlanmış yazı yok.</p>";
+      return;
+    }
+
+    snap.forEach(docSnap => {
+      const data = docSnap.data();
+      const createdAt = data.createdAt?.seconds
+        ? new Date(data.createdAt.seconds * 1000)
+        : (data.createdAt ? new Date(data.createdAt) : new Date());
+
+      const div = document.createElement('div');
+      div.className = 'blog-post';
+      div.innerHTML = `
+        <h3>${data.title}</h3>
+        <small>${createdAt.toLocaleDateString()} • ${data.author}</small>
+        <p>${data.content}</p>
+      `;
+      container.appendChild(div);
+    });
+
+    // Scroll animasyonu
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.blog-post').forEach(post => observer.observe(post));
+  } catch (err) {
+    console.error("Veri çekme hatası:", err);
+    container.innerHTML = `<p style="color:red;">Veriler alınırken hata oluştu: ${err.message}</p>`;
+  }
+}
+
+loadPosts();
+</script>
+</body>
+</html>

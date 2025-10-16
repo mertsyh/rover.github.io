@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roverium Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #050510 0%, #000000 100%);
+      color: white;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+  }
+
+  /* Arka plan siluet */
+  body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg") no-repeat center bottom;
+      background-size: 100%;
+      opacity: 1; /* Opaklığı düşük */
+      z-index: 0;
+      pointer-events: none;
+    background-size: cover;
+
+  }
+
+  /* Üst logo */
+  header {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      padding: 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+  }
+
+  header h1 {
+      margin:0;
+      font-size:1.8rem;
+      color:#ffad60;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+  }
+
+  header h1 img {
+      height: 50px;
+      width:auto;
+  }
+
+  main { max-width: 900px; margin: 80px auto 50px; padding: 0 15px; position: relative; z-index: 1; }
+
+  .card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 30px;
+      transition: transform 0.3s, background 0.3s;
+  }
+  .card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); }
+
+  input, textarea, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+  }
+
+  input, textarea { background: rgba(255,255,255,0.05); color: white; }
+  input::placeholder, textarea::placeholder { color: #aaa; }
+
+  button {
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+  }
+  button.primary { background: #ffad60; color: #111; }
+  button.primary:hover { background: #ffaa33; }
+  button.approve { background: green; color:white; margin-top:10px; }
+  button.approve:hover { background: #00cc44; }
+  button.reject { background: red; color:white; margin-top:10px; }
+  button.reject:hover { background: #ff3333; }
+
+  h2 { color: #ffad60; margin-top:0; }
+
+  @media(max-width:768px){
+    header { flex-direction: column; gap: 10px; padding: 15px; }
+  }
+</style>
+</head>
+<body>
+<header>
+    <h1>
+        <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="Logo">
+        Roverium Admin Panel
+    </h1>
+</header>
+
+<main>
+  <div class="card" id="auth-section">
+    <h2>Giriş Yap / Kayıt Ol</h2>
+    <input type="email" id="email" placeholder="E‑posta">
+    <input type="password" id="password" placeholder="Şifre">
+    <button id="loginBtn" class="primary">Giriş Yap</button>
+    <button id="signupBtn" class="primary">Kayıt Ol</button>
+  </div>
+
+  <div class="card" id="newPostSection" style="display:none;">
+    <h2>Yeni Yazı Ekle</h2>
+    <input type="text" id="postTitle" placeholder="Başlık">
+    <textarea id="postContent" placeholder="İçerik" rows="5"></textarea>
+    <button id="addPostBtn" class="primary">Kaydet (Pending)</button>
+  </div>
+
+  <div class="card" id="pendingPosts" style="display:none;">
+    <h2>Bekleyen Yazılar</h2>
+    <div id="postsContainer"></div>
+  </div>
+</main>
+
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+// --- Senin Firebase config ---
+const firebaseConfig = {
+  apiKey: "AIzaSyC7wHvnllwQMrM34daOU_V58lNfnOogVYk",
+  authDomain: "roverium-4f3db.firebaseapp.com",
+  projectId: "roverium-4f3db",
+  storageBucket: "roverium-4f3db.firebasestorage.app",
+  messagingSenderId: "1063901094879",
+  appId: "1:1063901094879:web:6d257de2ee99e7abfe5a6a",
+  measurementId: "G-R0EHN6ECNK"
+};
+
+// Firebase başlat
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
+
+
+// DOM
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const loginBtn = document.getElementById('loginBtn');
+const signupBtn = document.getElementById('signupBtn');
+const newPostSection = document.getElementById('newPostSection');
+const postTitle = document.getElementById('postTitle');
+const postContent = document.getElementById('postContent');
+const addPostBtn = document.getElementById('addPostBtn');
+const pendingPosts = document.getElementById('pendingPosts');
+const postsContainer = document.getElementById('postsContainer');
+
+// --- Kayıt ol ---
+signupBtn.addEventListener('click', async () => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+    const user = userCredential.user;
+
+    // E‑posta doğrulama gönder
+    await sendEmailVerification(user);
+    alert(`Kayıt başarılı! Lütfen ${emailInput.value} adresine gelen doğrulama linkini tıklayın.`);
+
+  } catch(e) { 
+    alert(e.message); 
+  }
+});
+
+const adminUID = "2pY39uMBp7doIKGalO6lOLaS6Ay2"; // örn: C4Qq3Qz8hVaf8xZ5bE2uWhDPXQz2
+
+loginBtn.addEventListener('click', async () => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+    const user = userCredential.user; // user burada tanımlanıyor
+
+    if (!user.emailVerified) {
+      alert("E-posta doğrulanmamış! Lütfen e-postanı kontrol et.");
+      return;
+    }
+
+    alert("Giriş başarılı!");
+
+    // Eğer giriş yapan kişi admin ise
+    if (user.uid === adminUID) {
+      alert("Admin olarak giriş yaptınız.");
+      newPostSection.style.display = 'block';
+      pendingPosts.style.display = 'block';
+      loadPendingPosts(); // bekleyenleri yükle
+    } 
+    else {
+      // Normal kullanıcı
+      newPostSection.style.display = 'block';
+      pendingPosts.style.display = 'none';
+    }
+
+  } catch (e) {
+    alert("Giriş hatası: " + e.message);
+  }
+});
+
+// --- Yeni yazı ekle ---
+addPostBtn.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if(!user) return;
+  await addDoc(collection(db, "posts"), {
+    title: postTitle.value,
+    content: postContent.value,
+    author: user.email,
+    authorUid: user.uid,
+    published: false,
+    createdAt: new Date()
+  });
+  alert("Yazınız kaydedildi. Admin onayı bekleniyor.");
+  postTitle.value = '';
+  postContent.value = '';
+  loadPendingPosts();
+});
+
+// --- Bekleyen yazıları yükle ---
+async function loadPendingPosts(){
+  postsContainer.innerHTML = '';
+  const q = query(collection(db, "posts"), where("published","==",false));
+  const snap = await getDocs(q);
+  snap.forEach(docSnap=>{
+    const data = docSnap.data();
+    const div = document.createElement('div');
+    div.className = 'post';
+    
+    // createdAt Timestamp ise bu şekilde, yoksa direkt Date kullan
+    let dateStr = data.createdAt?.toDate ? data.createdAt.toDate().toLocaleDateString() : new Date(data.createdAt).toLocaleDateString();
+    
+    div.innerHTML = `<h3>${data.title}</h3><p>${data.content}</p><small>${data.author} • ${dateStr}</small>`;
+    
+    const approveBtn = document.createElement('button');
+    approveBtn.textContent = 'Onayla';
+    approveBtn.className = 'approve';
+    approveBtn.onclick = async ()=>{
+      await updateDoc(doc(db, "posts", docSnap.id), { published:true });
+      loadPendingPosts();
+    };
+    
+    div.appendChild(approveBtn);
+    postsContainer.appendChild(div);
+  });
+}
+
+</script>
+</body>
+</html>

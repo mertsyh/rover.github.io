@@ -19,6 +19,10 @@ body {
             left: 0;
             z-index: -1;
             opacity: 1;
+            canvas {
+  pointer-events: none;
+  will-change: transform, opacity;
+}
         }
  @keyframes anim{
 
@@ -100,7 +104,10 @@ body {
             color: #888;
         }
 
-        /* Kaydırma oku stili */
+     @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
         .scroll-indicator {
             position: fixed;
             bottom: 50px;
@@ -115,7 +122,11 @@ body {
             transition: opacity 0.5s;
             z-index: 5;
             cursor: pointer;
+            animation: fadeIn 1.5s ease-in forwards;
+margin-right: 40px;
         }
+  
+
         .scroll-indicator .arrow {
             width: 30px;
             height: 30px;
@@ -128,6 +139,7 @@ body {
             margin-top: 10px;
             animation: bounce 2s infinite;
             transition: transform 0.5s ease-in-out;
+            margin-right: 40px;
         }
         .scroll-indicator.up .arrow {
             transform: rotate(-135deg);
@@ -212,15 +224,20 @@ body {
             }
         }
         form {
-  width: 550px;
-  height: 400px;
+  min-width: 550px;
+  min-height: 400px;
   margin: auto;
   padding: 20px;
   background: #fff;
    background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+ border-radius: 20px;
+border: 1px solid rgba(255, 255, 255, 0.2);
+ box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;   
 }
 input, textarea {
   width: 90%;
@@ -309,4 +326,10 @@ margin-right: 10px;
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+@media (max-width: 600px) {
+  form {
+    min-width: unset;
+    width: 95%;
+  }
 }
