@@ -143,7 +143,7 @@ async function loadPosts() {
       div.className = 'blog-post';
       div.innerHTML = `
         <h3>${data.title}</h3>
-        <small>${createdAt.toLocaleDateString()} • ${data.author}</small>
+        <small>${createdAt.toLocaleDateString()} </small>
         <p>${data.content}</p>
       `;
       container.appendChild(div);
