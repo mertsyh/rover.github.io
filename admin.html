@@ -274,7 +274,6 @@ addPostBtn.addEventListener('click', async () => {
   await addDoc(collection(db, "posts"), {
     title: title,
     content: content,
-    author: user.email,
     authorUid: user.uid,
     published: false,
     createdAt: new Date()
@@ -305,7 +304,7 @@ async function loadPendingPosts() {
     div.innerHTML = `
       <h3>${data.title}</h3>
       <div class="post-content">${data.content}</div>
-      <small>${data.author} • ${dateStr}</small>
+      <small>• ${dateStr}</small>
     `;
 
     if(user.uid === adminUID){
