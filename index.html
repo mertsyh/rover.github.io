@@ -9,7 +9,7 @@
    
 </head>
 <body>
- 
+    <!-- LOADING EKRANI -->
 <div id="loading-screen">
   <div class="spinner"></div>
   <p>Yükleniyor...</p>
@@ -24,6 +24,7 @@
             <a href="#">Ana Sayfa</a>
             <a href="gallery.html">Galeri</a>
             <a href="#contact">İletişim</a>
+            <a href="blog.html">Blog</a>
         </nav>
     </header>
 
@@ -35,7 +36,7 @@
     </div>
     
     <div class="scroll-indicator" id="scrollDownButton">
-        <span>Aşağı Kaydır</span>
+      
         <div class="arrow"></div>
     </div>
 
@@ -61,7 +62,7 @@
         <textarea name="message" rows="5"></textarea><br><br>
 
         <button type="submit">Gönder</button>
-        <p id="successMessage" style="display:none; color:lightgreen; margin-top:15px;">
+        <p id="successMessage" style="display:none; color:whitesmoke; margin-top:15px;">
             Mesajınız başarıyla gönderildi, teşekkür ederiz! 🚀
         </p>
     </form>
@@ -89,13 +90,13 @@ window.addEventListener("load", () => {
   const alreadyVisited = localStorage.getItem("visited");
 
   if (!alreadyVisited) {
-  
+    // İlk ziyaret — loading ekranı göster
     setTimeout(() => {
       loadingScreen.classList.add("hidden");
       localStorage.setItem("visited", "true");
     }, 1500);
   } else {
-
+    // Daha önce ziyaret edilmiş — loading ekranını direkt gizle
     loadingScreen.classList.add("hidden");
   }
 });
@@ -105,7 +106,7 @@ const form = document.getElementById("contactForm");
 const successMessage = document.getElementById("successMessage");
 
 form.addEventListener("submit", async (e) => {
-    e.preventDefault(); 
+    e.preventDefault(); // Sayfa yenilenmesini engelle
     const formData = new FormData(form);
 
     try {
@@ -118,6 +119,9 @@ form.addEventListener("submit", async (e) => {
         if (response.ok) {
             successMessage.style.display = "block";
             form.reset();
+            setTimeout(() => {
+                successMessage.style.display = "none";
+            }, 5000);
         } else {
             alert("Bir hata oluştu, lütfen tekrar deneyin.");
         }
@@ -127,17 +131,17 @@ form.addEventListener("submit", async (e) => {
 });
 </script>
 <script>
- 
+    // --- SAHNE KURULUMU ---
     
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mars"), antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-
+    // --- Doku Yükleyici ---
     const textureLoader = new THREE.TextureLoader();
 
-  
+    // --- MARS KÜRESİ VE DOKUSU ---
     const geometry = new THREE.SphereGeometry(10, 64, 64);
     const marsTexture = textureLoader.load("mars.jpg", () => {
         initAnimations();
@@ -146,6 +150,7 @@ form.addEventListener("submit", async (e) => {
     const mars = new THREE.Mesh(geometry, material);
     scene.add(mars);
 
+    // --- ATMOSFER KÜRESİ ---
     const atmosphereGeometry = new THREE.SphereGeometry(10.2, 64, 64);
     const atmosphereMaterial = new THREE.MeshStandardMaterial({
         color: 0x909090,
@@ -157,7 +162,7 @@ form.addEventListener("submit", async (e) => {
     scene.add(atmosphere);
     atmosphere.position.copy(mars.position);
 
- 
+    // --- YILDIZLAR OLUŞTURMA ---
     function addStars() {
         const starsGeometry = new THREE.BufferGeometry();
         const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
@@ -175,25 +180,25 @@ form.addEventListener("submit", async (e) => {
     }
     const stars = addStars();
 
-
+    // --- IŞIKLANDIRMA ---
     const light = new THREE.PointLight(0xffffff, 1.5);
     light.position.set(20, 20, 50);
     scene.add(light);
     const ambientLight = new THREE.AmbientLight(0x404040);
     scene.add(ambientLight);
 
-
+    // --- KAMERA KONUMU ---
     camera.position.set(0, 0, 30);
     camera.lookAt(mars.position);
 
-
+    // --- ANIMASYON DÖNGÜSÜ ---
     function animate() {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
     }
     animate();
 
- 
+    // --- PENCERE BOYUTU DEĞİŞTİRME FONKSİYONU ---
     window.addEventListener("resize", () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -224,15 +229,15 @@ form.addEventListener("submit", async (e) => {
         marsTimeline.to([mars.rotation, atmosphere.rotation], { x: 1, ease: "power2.inOut" }, 0); 
         
       marsTimeline.to([mars.scale, atmosphere.scale], {
-    x: 15, y: 15, z: 15, 
+    x: 10, y: 10, z: 10, // Değerleri 50'den 15'e düşürdük.
     ease: "power2.in"
 }, "<0.2");
 
-    
+        // Aşama 3: Büyüme animasyonuyla aynı anda şeffaflaşarak kaybolur.
         marsTimeline.to([mars.material, atmosphere.material], {
             opacity: 0,
             ease: "power2.in"
-        }, "<");
+        }, "<1");
 
 
         ScrollTrigger.create({
@@ -259,7 +264,7 @@ form.addEventListener("submit", async (e) => {
         gsap.fromTo(".footer", { opacity: 0, y: 20 }, {
             scrollTrigger: {
                 trigger: ".footer",
-                start: "top 95%",
+                start: "top 100%",
                 toggleActions: "play none none none"
             },
             opacity: 1,
@@ -299,11 +304,11 @@ form.addEventListener("submit", async (e) => {
                 start: "top center",
                 onEnter: () => {
                     scrollButton.classList.add("up");
-                    scrollButton.querySelector('span').textContent = "Yukarı Çık";
+                   
                 },
                 onLeaveBack: () => {
                     scrollButton.classList.remove("up");
-                    scrollButton.querySelector('span').textContent = "Aşağı Kaydır";
+                   
                 }
             });
         }
