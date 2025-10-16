@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roverium Admin Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Quill CSS -->
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+
 <style>
   body {
       margin: 0;
@@ -16,7 +20,6 @@
       overflow-x: hidden;
   }
 
-  /* Arka plan siluet */
   body::before {
       content: "";
       position: fixed;
@@ -25,15 +28,12 @@
       width: 100%;
       height: 100%;
       background: url("https://images.unsplash.com/photo-1635776063043-ab23b4c226f6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8") no-repeat center bottom;
-      background-size: 100%;
-      opacity: 1; /* Opaklığı düşük */
+      background-size: cover;
+      opacity: 1;
       z-index: 0;
       pointer-events: none;
-    background-size: cover;
-
   }
 
-  /* Üst logo */
   header {
       background: rgba(255,255,255,0.05);
       backdrop-filter: blur(10px);
@@ -60,7 +60,13 @@
       width:auto;
   }
 
-  main { max-width: 900px; margin: 80px auto 50px; padding: 0 15px; position: relative; z-index: 1; }
+  main {
+      max-width: 900px;
+      margin: 80px auto 50px;
+      padding: 0 15px;
+      position: relative;
+      z-index: 1;
+  }
 
   .card {
       background: rgba(255,255,255,0.05);
@@ -70,9 +76,12 @@
       margin-bottom: 30px;
       transition: transform 0.3s, background 0.3s;
   }
-  .card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); }
+  .card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.1);
+  }
 
-  input, textarea, button {
+  input, button {
       display: block;
       width: 100%;
       margin: 10px 0;
@@ -82,8 +91,8 @@
       font-size: 1rem;
   }
 
-  input, textarea { background: rgba(255,255,255,0.05); color: white; }
-  input::placeholder, textarea::placeholder { color: #aaa; }
+  input { background: rgba(255,255,255,0.05); color: white; }
+  input::placeholder { color: #aaa; }
 
   button {
       cursor: pointer;
@@ -101,6 +110,32 @@
 
   @media(max-width:768px){
     header { flex-direction: column; gap: 10px; padding: 15px; }
+  }
+
+  /* Quill editor içerisindeki resimler */
+  .ql-editor img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px 0;
+      border-radius: 10px;
+  }
+
+  /* Post içerikleri */
+  .post {
+      margin-bottom: 20px;
+  }
+
+  .post-content {
+      overflow-wrap: break-word;
+  }
+
+  .post-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px 0;
+      border-radius: 10px;
   }
 </style>
 </head>
@@ -124,7 +159,7 @@
   <div class="card" id="newPostSection" style="display:none;">
     <h2>Yeni Yazı Ekle</h2>
     <input type="text" id="postTitle" placeholder="Başlık">
-    <textarea id="postContent" placeholder="İçerik" rows="5"></textarea>
+    <div id="editor" style="height: 300px; background: rgba(255,255,255,0.05); border-radius:10px; padding:10px;"></div>
     <button id="addPostBtn" class="primary">Kaydet (Pending)</button>
   </div>
 
@@ -134,14 +169,15 @@
   </div>
 </main>
 
+<!-- Quill JS -->
+<script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
 
 <!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, doc, updateDoc ,deleteDoc} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-// --- Senin Firebase config ---
 const firebaseConfig = {
   apiKey: "AIzaSyC7wHvnllwQMrM34daOU_V58lNfnOogVYk",
   authDomain: "roverium-4f3db.firebaseapp.com",
@@ -152,11 +188,9 @@ const firebaseConfig = {
   measurementId: "G-R0EHN6ECNK"
 };
 
-// Firebase başlat
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
-
 
 // DOM
 const emailInput = document.getElementById('email');
@@ -165,32 +199,26 @@ const loginBtn = document.getElementById('loginBtn');
 const signupBtn = document.getElementById('signupBtn');
 const newPostSection = document.getElementById('newPostSection');
 const postTitle = document.getElementById('postTitle');
-const postContent = document.getElementById('postContent');
 const addPostBtn = document.getElementById('addPostBtn');
 const pendingPosts = document.getElementById('pendingPosts');
 const postsContainer = document.getElementById('postsContainer');
 
-// --- Kayıt ol ---
+// Kayıt
 signupBtn.addEventListener('click', async () => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
     const user = userCredential.user;
-
-    // E‑posta doğrulama gönder
     await sendEmailVerification(user);
     alert(`Kayıt başarılı! Lütfen ${emailInput.value} adresine gelen doğrulama linkini tıklayın.`);
-
-  } catch(e) { 
-    alert(e.message); 
-  }
+  } catch(e) { alert(e.message); }
 });
 
-const adminUID = "2pY39uMBp7doIKGalO6lOLaS6Ay2"; // örn: C4Qq3Qz8hVaf8xZ5bE2uWhDPXQz2
+const adminUID = "2pY39uMBp7doIKGalO6lOLaS6Ay2";
 
 loginBtn.addEventListener('click', async () => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-    const user = userCredential.user; // user burada tanımlanıyor
+    const user = userCredential.user;
 
     if (!user.emailVerified) {
       alert("E-posta doğrulanmamış! Lütfen e-postanı kontrol et.");
@@ -199,58 +227,73 @@ loginBtn.addEventListener('click', async () => {
 
     alert("Giriş başarılı!");
 
-    // Eğer giriş yapan kişi admin ise
     if (user.uid === adminUID) {
       alert("Admin olarak giriş yaptınız.");
       newPostSection.style.display = 'block';
       pendingPosts.style.display = 'block';
-      loadPendingPosts(); // bekleyenleri yükle
-    } 
-    else {
-      // Normal kullanıcı
+      loadPendingPosts();
+    } else {
       newPostSection.style.display = 'block';
       pendingPosts.style.display = 'none';
     }
 
-  } catch (e) {
-    alert("Giriş hatası: " + e.message);
+  } catch (e) { alert("Giriş hatası: " + e.message); }
+});
+
+// Quill
+const quill = new Quill('#editor', {
+  theme: 'snow',
+  placeholder: 'Yazınızı buraya yazın...',
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'header': 1 }, { 'header': 2 }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'color': [] }, { 'background': [] }],
+      ['link', 'image'],
+      ['clean']
+    ]
   }
 });
 
-// --- Yeni yazı ekle ---
+// Yeni yazı ekle
 addPostBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
   if(!user) return;
+
+  const title = postTitle.value.trim();
+  const content = quill.root.innerHTML.trim();
+
+  if(!title || !content) {
+    alert("Başlık veya içerik boş olamaz!");
+    return;
+  }
+
   await addDoc(collection(db, "posts"), {
-    title: postTitle.value,
-    content: postContent.value,
+    title: title,
+    content: content,
     author: user.email,
     authorUid: user.uid,
     published: false,
     createdAt: new Date()
   });
+
   alert("Yazınız kaydedildi. Admin onayı bekleniyor.");
   postTitle.value = '';
-  postContent.value = '';
+  quill.setText('');
   loadPendingPosts();
 });
 
-// --- Bekleyen yazıları yükle ---
-async function loadPendingPosts(){
+// Bekleyen yazıları yükle
+async function loadPendingPosts() {
   postsContainer.innerHTML = '';
-  
-  // Admin mi kontrol et
   const user = auth.currentUser;
   if(!user) return;
 
-  let q;
-  if(user.uid === adminUID){
-    // Admin tüm yazıları görebilir
-    q = query(collection(db, "posts"));
-  } else {
-    // Normal kullanıcı sadece kendi yazılarını görebilir
-    q = query(collection(db, "posts"), where("authorUid","==",user.uid));
-  }
+  let q = user.uid === adminUID ? query(collection(db, "posts")) :
+          query(collection(db, "posts"), where("authorUid","==",user.uid));
 
   const snap = await getDocs(q);
   snap.forEach(docSnap => {
@@ -259,14 +302,17 @@ async function loadPendingPosts(){
     div.className = 'post';
 
     let dateStr = data.createdAt?.toDate ? data.createdAt.toDate().toLocaleDateString() : new Date(data.createdAt).toLocaleDateString();
-    div.innerHTML = `<h3>${data.title}</h3><p>${data.content}</p><small>${data.author} • ${dateStr}</small>`;
+    div.innerHTML = `
+      <h3>${data.title}</h3>
+      <div class="post-content">${data.content}</div>
+      <small>${data.author} • ${dateStr}</small>
+    `;
 
-    // Admin butonları
     if(user.uid === adminUID){
       const approveBtn = document.createElement('button');
       approveBtn.textContent = data.published ? 'Yayınlandı' : 'Onayla';
       approveBtn.className = 'approve';
-      approveBtn.disabled = data.published; // Eğer zaten yayınlandıysa pasif
+      approveBtn.disabled = data.published;
       approveBtn.onclick = async () => {
         await updateDoc(doc(db, "posts", docSnap.id), { published:true });
         loadPendingPosts();
@@ -287,10 +333,8 @@ async function loadPendingPosts(){
     }
 
     postsContainer.appendChild(div);
-
   });
 }
-
 </script>
 </body>
 </html>
