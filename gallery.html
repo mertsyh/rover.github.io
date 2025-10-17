@@ -16,7 +16,7 @@
             position: relative;
         }
 
-        .header {
+       .header {
             position: fixed;
             top: 0;
             left: 0;
@@ -30,16 +30,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            animation: 1.5s 1 anim;
         }
+       
         .header .logo {
             font-size: 1.5rem;
             font-weight: 700;
             text-decoration: none;
             color: white;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .header .logo:hover {
             color: #ccc;
+        }
+        .header .logo img {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+        .header .logo:hover img {
+            transform: scale(1.1);
         }
         .header nav a {
             color: white;
@@ -197,8 +210,7 @@
             }
             .gallery-wrapper {
                 padding-top: 120px;
-                /* Mobil için özel arka plan gradyanı */
-                background: linear-gradient(135deg, #2b1c4a 0%, #171129 100%);
+                background: linear-gradient(135deg, #0f0a20 0%, #00000a 100%); /* Mobil için daha koyu bir arka plan */
             }
             .gallery-bar {
                 width: 95%;
@@ -211,9 +223,8 @@
                 width: calc(50% - 10px);
                 height: 120px;
             }
-            /* Mobil cihazlarda arka plan şekillerini gizle */
             .bg-shape {
-                display: none;
+                display: none; /* Mobil cihazlarda şekilleri gizle */
             }
         }
 
@@ -235,8 +246,8 @@
         <a href="index.html" class="logo">İKÜ ROVERIUM</a>
         <nav>
             <a href="index.html">Ana Sayfa</a>
-            <a href="gallery.html">Galeri</a>
-            <a href="index.html#contact">İletişim</a>
+            <a href="blog.html">Blog</a>
+          
         </nav>
     </header>
 
@@ -248,8 +259,15 @@
                 <div class="gallery-item">
                     <img src="roverium.JPG" alt="Galeri Fotoğrafı 1">
                 </div>
-             
-
+                <div class="gallery-item">
+                    <img src="foto2.JPG" alt="Galeri Fotoğrafı 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="foto3.JPG" alt="Galeri Fotoğrafı 3">
+                </div>
+                 <div class="gallery-item">
+                    <img src="foto4.JPG" alt="Galeri Fotoğrafı 3">
+                </div>
             </div>
         </div>
     </div>
