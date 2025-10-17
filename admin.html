@@ -18,7 +18,7 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-  }
+  } 
 
   body::before {
       content: "";
@@ -69,12 +69,14 @@
   }
 
   .card {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
       border-radius: 15px;
       padding: 20px;
       margin-bottom: 30px;
       transition: transform 0.3s, background 0.3s;
+      width: 600px;
+      margin: 0 auto 30px;
   }
   .card:hover {
       transform: translateY(-5px);
@@ -83,12 +85,13 @@
 
   input, button {
       display: block;
-      width: 100%;
+      width: 60%;
       margin: 10px 0;
       padding: 10px;
       border-radius: 10px;
-      border: none;
+      border: 0.5px solid whitesmoke;
       font-size: 1rem;
+      margin: 0 auto 30px;
   }
 
   input { background: rgba(255,255,255,0.05); color: white; }
@@ -99,12 +102,12 @@
       font-weight: bold;
       transition: 0.3s;
   }
-  button.primary { background: #ffad60; color: #111; }
-  button.primary:hover { background: #ffaa33; }
+  button.primary { background: rgba(255,255,255,0.5); width:200px; }
+  button.primary:hover { background: #d2d7f7; }
   button.approve { background: green; color:white; margin-top:10px; }
-  button.approve:hover { background: #00cc44; }
+  button.approve:hover { background: #d2d7f7; }
   button.reject { background: red; color:white; margin-top:10px; }
-  button.reject:hover { background: #ff3333; }
+  button.reject:hover { background: #d2d7f7; }
 
   h2 { color: #ffad60; margin-top:0; }
 
@@ -141,7 +144,7 @@
 </head>
 <body>
 <header>
-    <h1>
+    <h1 style="color:white;">
         <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="Logo">
         Roverium Admin Panel
     </h1>
@@ -149,7 +152,7 @@
 
 <main>
   <div class="card" id="auth-section">
-    <h2>Giriş Yap / Kayıt Ol</h2>
+ <center>  <h2 style="color:white;">Giriş Yap / Kayıt Ol</h2></center> 
     <input type="email" id="email" placeholder="E‑posta">
     <input type="password" id="password" placeholder="Şifre">
     <button id="loginBtn" class="primary">Giriş Yap</button>
@@ -337,5 +340,3 @@ async function loadPendingPosts() {
 </script>
 </body>
 </html>
-
-
