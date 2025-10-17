@@ -10,155 +10,184 @@
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 
 <style>
-  body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(135deg, #050510 0%, #000000 100%);
-      color: white;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-  } 
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, #050510 0%, #000000 100%);
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url("foto5.png") no-repeat center bottom;
-      background-size: cover;
-      opacity: 1;
-      z-index: 0;
-      pointer-events: none;
-  }
+/* Arka plan */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("foto5.png") no-repeat center bottom;
+  background-size: cover;
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+}
 
-  header {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-      padding: 20px 50px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-  }
+/* Header */
+header {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-  header h1 {
-      margin:0;
-      font-size:1.8rem;
-      color:#ffad60;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-  }
+header h1 {
+  margin:0;
+  font-size:1.8rem;
+  color:#ffad60;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
-  header h1 img {
-      height: 50px;
-      width:auto;
-  }
+header h1 img {
+  height: 50px;
+  width:auto;
+}
 
-  main {
-      max-width: 900px;
-      margin: 80px auto 50px;
-      padding: 0 15px;
-      position: relative;
-      z-index: 1;
-  }
+main {
+  max-width: 900px;
+  margin: 80px auto 50px;
+  padding: 0 15px;
+  position: relative;
+  z-index: 1;
+}
 
-  .card {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 30px;
-      transition: transform 0.3s, background 0.3s;
-      width: 600px;
-      margin: 0 auto 30px;
-  }
-  .card:hover {
-      transform: translateY(-5px);
-      background: rgba(255,255,255,0.1);
-  }
+/* Card */
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 0 auto 30px;
+  transition: transform 0.3s, background 0.3s;
+  width: 90%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+.card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.15);
+}
 
-  input, button {
-      display: block;
-      width: 60%;
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 10px;
-      border: 0.5px solid whitesmoke;
-      font-size: 1rem;
-      margin: 0 auto 30px;
-  }
+/* Inputs & Buttons */
+input, button {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 10px;
+  border: 0.5px solid whitesmoke;
+  font-size: 1rem;
+}
 
-  input { background: rgba(255,255,255,0.05); color: white; }
-  input::placeholder { color: #aaa; }
+input {
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+input::placeholder { color: #aaa; }
 
-  button {
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-  }
-  button.primary { background: rgba(255,255,255,0.5); width:200px; }
-  button.primary:hover { background: #d2d7f7; }
-  button.approve { background: green; color:white; margin-top:10px; }
-  button.approve:hover { background: #d2d7f7; }
-  button.reject { background: red; color:white; margin-top:10px; }
-  button.reject:hover { background: #d2d7f7; }
+button {
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+button.primary { background: rgba(255,255,255,0.5); width:200px; }
+button.primary:hover { background: #d2d7f7; }
+button.approve { background: green; color:white; margin-top:10px; }
+button.approve:hover { background: #d2d7f7; }
+button.reject { background: red; color:white; margin-top:10px; }
+button.reject:hover { background: #d2d7f7; }
 
-  h2 { color: #ffad60; margin-top:0; }
+h2 { color: #ffad60; margin-top:0; text-align:center; }
 
-  @media(max-width:768px){
-    header { flex-direction: column; gap: 10px; padding: 15px; }
-  }
+/* Responsive */
+@media(max-width:768px){
+  header { flex-direction: column; gap: 10px; padding: 15px; text-align:center; }
+  .card { width: 95%; padding: 15px; }
+  input, button { width: 90%; }
+}
 
-  /* Quill editor içerisindeki resimler */
-  .ql-editor img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 10px 0;
-      border-radius: 10px;
-  }
+/* Quill içerik */
+.ql-editor img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px 0;
+  border-radius: 10px;
+}
 
-  /* Post içerikleri */
-  .post {
-      margin-bottom: 20px;
-  }
+/* Post içerikleri */
+.post {
+  margin-bottom: 20px;
+}
+.post-content {
+  overflow-wrap: break-word;
+}
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px 0;
+  border-radius: 10px;
+}
 
-  .post-content {
-      overflow-wrap: break-word;
-  }
-
-  .post-content img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 10px 0;
-      border-radius: 10px;
-  }
+/* Geçiş animasyonu */
+#login-container, #signup-container {
+  transition: all 0.3s ease;
+}
 </style>
 </head>
 <body>
+
 <header>
-    <h1 style="color:white;">
-        <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="Logo">
-        Roverium Admin Panel
-    </h1>
+  <h1>
+    <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="Logo">
+    Roverium Admin Panel
+  </h1>
 </header>
 
 <main>
-  <div class="card" id="auth-section">
- <center>  <h2 style="color:white;">Giriş Yap / Kayıt Ol</h2></center> 
-    <input type="email" id="email" placeholder="E‑posta">
-    <input type="password" id="password" placeholder="Şifre">
+
+  <!-- GİRİŞ -->
+  <div class="card" id="login-container">
+    <h2>Giriş Yap</h2>
+    <input type="email" id="loginEmail" placeholder="E-posta">
+    <input type="password" id="loginPassword" placeholder="Şifre">
     <button id="loginBtn" class="primary">Giriş Yap</button>
-    <button id="signupBtn" class="primary">Kayıt Ol</button>
+    <p style="text-align:center; color:#ccc;">Hesabın yok mu? 
+      <a href="#" id="showSignup" style="color:#ffad60;">Kayıt Ol</a>
+    </p>
   </div>
 
+  <!-- KAYIT -->
+  <div class="card" id="signup-container" style="display:none;">
+    <h2>Kayıt Ol</h2>
+    <input type="email" id="signupEmail" placeholder="E-posta">
+    <input type="password" id="signupPassword" placeholder="Şifre">
+    <button id="signupBtn" class="primary">Kayıt Ol</button>
+    <p style="text-align:center; color:#ccc;">Zaten hesabın var mı? 
+      <a href="#" id="showLogin" style="color:#ffad60;">Giriş Yap</a>
+    </p>
+  </div>
+
+  <!-- YAZI EKLE -->
   <div class="card" id="newPostSection" style="display:none;">
     <h2>Yeni Yazı Ekle</h2>
     <input type="text" id="postTitle" placeholder="Başlık">
@@ -166,10 +195,12 @@
     <button id="addPostBtn" class="primary">Kaydet (Pending)</button>
   </div>
 
+  <!-- BEKLEYEN YAZILAR -->
   <div class="card" id="pendingPosts" style="display:none;">
     <h2>Bekleyen Yazılar</h2>
     <div id="postsContainer"></div>
   </div>
+
 </main>
 
 <!-- Quill JS -->
@@ -196,8 +227,14 @@ const auth = getAuth();
 const db = getFirestore();
 
 // DOM
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
+const loginContainer = document.getElementById('login-container');
+const signupContainer = document.getElementById('signup-container');
+const showSignup = document.getElementById('showSignup');
+const showLogin = document.getElementById('showLogin');
+const loginEmail = document.getElementById('loginEmail');
+const loginPassword = document.getElementById('loginPassword');
+const signupEmail = document.getElementById('signupEmail');
+const signupPassword = document.getElementById('signupPassword');
 const loginBtn = document.getElementById('loginBtn');
 const signupBtn = document.getElementById('signupBtn');
 const newPostSection = document.getElementById('newPostSection');
@@ -206,21 +243,35 @@ const addPostBtn = document.getElementById('addPostBtn');
 const pendingPosts = document.getElementById('pendingPosts');
 const postsContainer = document.getElementById('postsContainer');
 
+// Giriş / Kayıt geçişi
+showSignup.addEventListener('click', (e) => {
+  e.preventDefault();
+  loginContainer.style.display = 'none';
+  signupContainer.style.display = 'block';
+});
+showLogin.addEventListener('click', (e) => {
+  e.preventDefault();
+  signupContainer.style.display = 'none';
+  loginContainer.style.display = 'block';
+});
+
 // Kayıt
 signupBtn.addEventListener('click', async () => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+    const userCredential = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
     const user = userCredential.user;
     await sendEmailVerification(user);
-    alert(`Kayıt başarılı! Lütfen ${emailInput.value} adresine gelen doğrulama linkini tıklayın.`);
+    alert(`Kayıt başarılı! Lütfen ${signupEmail.value} adresine gelen doğrulama linkini tıklayın.`);
   } catch(e) { alert(e.message); }
 });
 
+// Admin UID
 const adminUID = "2pY39uMBp7doIKGalO6lOLaS6Ay2";
 
+// Giriş
 loginBtn.addEventListener('click', async () => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+    const userCredential = await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
     const user = userCredential.user;
 
     if (!user.emailVerified) {
@@ -229,6 +280,9 @@ loginBtn.addEventListener('click', async () => {
     }
 
     alert("Giriş başarılı!");
+
+    loginContainer.style.display = 'none';
+    signupContainer.style.display = 'none';
 
     if (user.uid === adminUID) {
       alert("Admin olarak giriş yaptınız.");
@@ -253,7 +307,6 @@ const quill = new Quill('#editor', {
       ['blockquote', 'code-block'],
       [{ 'header': 1 }, { 'header': 2 }],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
       [{ 'color': [] }, { 'background': [] }],
       ['link', 'image'],
       ['clean']
@@ -288,14 +341,14 @@ addPostBtn.addEventListener('click', async () => {
   loadPendingPosts();
 });
 
-// Bekleyen yazıları yükle
+// Bekleyen yazılar
 async function loadPendingPosts() {
   postsContainer.innerHTML = '';
   const user = auth.currentUser;
   if(!user) return;
 
   let q = user.uid === adminUID ? query(collection(db, "posts")) :
-          query(collection(db, "posts"), where("authorUid","==",user.uid));
+        query(collection(db, "posts"), where("authorUid","==",user.uid));
 
   const snap = await getDocs(q);
   snap.forEach(docSnap => {
