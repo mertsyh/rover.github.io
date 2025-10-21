@@ -9,23 +9,31 @@
     body {
         margin: 0;
         font-family: 'Montserrat', sans-serif;
-        background: linear-gradient(135deg, #050510 0%, #000000 100%);
+        background: url("https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-018.jpg");
+        background-size: cover;
         color: white;
         min-height: 100vh;
     }
     .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 20px 50px;
-        box-sizing: border-box;
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        z-index: 10;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+                position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Ortalamayı sağlar */
+    width: 50%; /* Ortalanacak kutunun genişliği */
+    padding: 20px 50px;
+    box-sizing: border-box;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 40px; /* İsteğe bağlı — güzel görünür */
+    margin-top: 30px;
+/* From https://css.glass */
+background: rgba(89, 79, 79, 0.12);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(9.2px);
+-webkit-backdrop-filter: blur(9.2px);
+border: 1px solid rgba(89, 79, 79, 0.84);
     }
     .header .logo {
         font-size: 1.5rem;
@@ -60,7 +68,7 @@
         text-align: left;
         opacity: 0;
         transform: translateY(30px);
-        transition: all 0.8s ease-out;
+        transition: all 0.5s ease-out;
     }
 
     .blog-post h3 { margin-top: 0; color: #ffad60; }
