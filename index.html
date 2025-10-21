@@ -20,12 +20,14 @@
             <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="İKÜ ROVERIUM Logo">
             İKÜ ROVERIUM
         </a>
-        <nav>
-            <a href="#">Ana Sayfa</a>
-            <a href="gallery.html">Galeri</a>
-            <a href="#contact">İletişim</a>
-            <a href="blog.html">Blog</a>
-        </nav>
+       <nav class="menu">
+    <a href="#" class="menu-item active">Ana Sayfa</a>
+    <a href="gallery.html" class="menu-item">Galeri</a>
+    <a href="#contact" class="menu-item">İletişim</a>
+    <a href="blog.html" class="menu-item">Blog</a>
+    <div class="menu-indicator"></div>
+</nav>
+
     </header>
 
     <canvas id="mars"></canvas>
@@ -39,13 +41,57 @@
       
         <div class="arrow"></div>
     </div>
+<!-- Font Awesome (ikon kütüphanesi) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <section class="page-section" id="community-section">
-        <div class="community-bar">
-            <h1>Topluluğumuz</h1>
-            <p>İstanbul Kültür Üniversitesi'nde bir öğrenci topluluğuyuz. Avrupa Rover Challenge'da yarışacak bir rover geliştirmeye çalışıyoruz.</p>
-        </div>
-    </section>
+<section class="page-section" id="community-section">
+  <div class="community-container">
+    <h1>Topluluğumuz</h1>
+    <p class="community-intro">
+      İstanbul Kültür Üniversitesi'nde bir öğrenci topluluğuyuz. Avrupa Rover Challenge'da yarışacak bir rover geliştirmeye çalışıyoruz. 
+     
+    </p>
+
+    <div class="community-cards">
+      <div class="community-card">
+        <i class="fa-solid fa-trophy"></i>
+        <h3>Uluslararası Yarışmalar</h3>
+        <p>Başta ERC (European Rover Challenge) olmak üzere çeşitli rover yarışmalarına katılmak.</p>
+      </div>
+
+      <div class="community-card">
+        <i class="fa-solid fa-flask"></i>
+        <h3>TÜBİTAK Projeleri</h3>
+        <p>TÜBİTAK’ta çeşitli alanlarda yenilikçi projeler geliştirmek.</p>
+      </div>
+
+      <div class="community-card">
+        <i class="fa-solid fa-gears"></i>
+        <h3>Ar-Ge ve Atölyeler</h3>
+        <p>Ar-Ge projeleri ve teknik atölyelerle üyelerimize pratik deneyim kazandırmak.</p>
+      </div>
+
+      <div class="community-card">
+        <i class="fa-solid fa-rocket"></i>
+        <h3>Uzay ve Robotik</h3>
+        <p>Uzay keşfi ve robotik teknolojiler alanında bilgi birikimini artırmak.</p>
+      </div>
+
+      <div class="community-card">
+        <i class="fa-solid fa-seedling"></i>
+        <h3>Kişisel Gelişim</h3>
+        <p>Üyelerimizin hem teknik hem kişisel gelişimlerini desteklemek.</p>
+      </div>
+
+      <div class="community-card">
+        <i class="fa-solid fa-briefcase"></i>
+        <h3>Profesyonel Gelecek</h3>
+        <p>Üyelerimizi sektörün öncüleri arasında yer almaya hazırlamak.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
     <section class="page-section" id="contact">
     <h2>Bizimle İletişime Geçin</h2>
@@ -130,6 +176,34 @@ form.addEventListener("submit", async (e) => {
     }
 });
 </script>
+<script type="text/javascript"> const menu = document.querySelector('.menu');
+const items = document.querySelectorAll('.menu-item');
+const indicator = document.querySelector('.menu-indicator');
+
+function moveIndicator(el) {
+    const rect = el.getBoundingClientRect();
+    const parentRect = menu.getBoundingClientRect();
+    const left = rect.left - parentRect.left;
+    const width = rect.width;
+
+    indicator.style.left = `${left}px`;
+    indicator.style.width = `${width}px`;
+}
+
+// Başlangıçta aktif link
+const activeItem = document.querySelector('.menu-item.active');
+moveIndicator(activeItem);
+
+// Tıklayınca aktif değişsin
+items.forEach(item => {
+    item.addEventListener('click', e => {
+        items.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        moveIndicator(item);
+    });
+});
+</script>
+<
 <script>
     // --- SAHNE KURULUMU ---
     
