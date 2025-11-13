@@ -88,37 +88,43 @@ main {
   transform: translateY(-5px);
 }
 
-
+/* INPUT */
 input {
-  width: 80%;
+  width: 85%;
   margin: 10px auto;
+  display: block;
   padding: 12px;
   border-radius: 10px;
   border: 1px solid #444;
-  background: #1a1a2e; /* koyu solid */
+  background: #1a1a2e;
   color: white;
   font-size: 16px;
-  outline: none;
-  transition: 0.2s;
 }
 
-input::placeholder {
-  color: #9aa0b7;
-}
-
-input:focus {
-  border-color: #ffad60;
-  background: #22223a; 
-}
-
-
+/* BUTTON */
 button {
+  display: block;
+  margin: 15px auto;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: bold;
   transition: 0.3s;
 }
-button.primary {  width:200px; }
-button.primary:hover { background: #d2d7f7; }
+
+/* Giriş yap butonu genişliğini sabitle */
+button.primary {
+  width: 200px;       /* ← kaymayı engelleyen kısım */
+  background: #ffad60;
+  color: black;
+}
+
+button.primary:hover {
+  background: #ffd2a1;
+}
+
 button.approve { background: green; color:white; margin-top:10px; }
 button.approve:hover { background: #d2d7f7; }
 button.reject { background: red; color:white; margin-top:10px; }
@@ -403,6 +409,7 @@ async function loadPendingPosts() {
 </script>
 </body>
 </html>
+
 
 
 
