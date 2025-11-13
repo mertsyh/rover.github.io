@@ -70,49 +70,55 @@ main {
 }
 
 /* Card */
+/* Card - Saydam değil, solid */
 .card {
-
-background: rgba(255, 255, 255, 0.91);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(4.9px);
--webkit-backdrop-filter: blur(4.9px);
-border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 20px;
+  background: #0e0e18; /* koyu opak kutu */
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 25px;
   margin: 0 auto 30px;
-  transition: transform 0.3s, background 0.3s;
   width: 90%;
   max-width: 600px;
   box-sizing: border-box;
+  transition: 0.3s;
 }
+
 .card:hover {
   transform: translateY(-5px);
-  background: rgba(255,255,255,0.15);
+  background: #131324; /* hafif daha açık hover */
 }
 
-/* Inputs & Buttons */
-input, button {
-  display: block;
-  width: 80%;
-  margin: 10px auto;
-  padding: 10px;
-  border-radius: 10px;
-  border: 0.5px solid whitesmoke;
-  font-size: 1rem;
-}
 
 input {
-  background: rgba(255,255,255,0.05);
+  width: 80%;
+  margin: 10px auto;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background: #1a1a2e; /* koyu solid */
   color: white;
+  font-size: 16px;
+  outline: none;
+  transition: 0.2s;
 }
-input::placeholder { color: #aaa; }
+
+input::placeholder {
+  color: #9aa0b7;
+}
+
+input:focus {
+  border-color: #ffad60;
+  background: #22223a; 
+}
+
 
 button {
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s;
 }
-button.primary { background: rgba(255,255,255,0.5); width:200px; }
+button.primary {  width:200px; }
 button.primary:hover { background: #d2d7f7; }
 button.approve { background: green; color:white; margin-top:10px; }
 button.approve:hover { background: #d2d7f7; }
