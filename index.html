@@ -6,7 +6,7 @@
     <title>ROVERIUM | ANA SAYFA</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
-   
+   <link rel="icon" href="logo.png" type="image/png">
 </head>
 <body>
     <!-- LOADING EKRANI -->
@@ -20,12 +20,21 @@
             <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="İKÜ ROVERIUM Logo">
             İKÜ ROVERIUM
         </a>
+        <center>
+  <div class="switch">
+    <input id="language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox">
+    <label for="language-toggle"></label>
+    <span class="on">TR</span>
+    <span class="off">EN</span>
+  </div>
+</center>
+
        <nav class="menu">
-    <a href="#" class="menu-item active">Ana Sayfa</a>
-    <a href="gallery.html" class="menu-item">Galeri</a>
-    <a href="#contact" class="menu-item">İletişim</a>
-    <a href="blog.html" class="menu-item">Blog</a>
-    <div class="menu-indicator"></div>
+   <a href="#" class="menu-item active" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a>
+            <a href="gallery.html" class="menu-item" data-tr="Galeri" data-en="Gallery">Galeri</a>
+            <a href="index.html#contact" class="menu-item" data-tr="İletişim" data-en="Contact">İletişim</a>
+            <a href="blog.html" class="menu-item" data-tr="Blog" data-en="Blog">Blog</a>
+            <div class="menu-indicator"></div>
 </nav>
 
     </header>
@@ -33,8 +42,9 @@
     <canvas id="mars"></canvas>
 
     <div class="page-section content">
-        <h1>İKÜ ROVERIUM KİMDİR?</h1>
-        <p>Aşağı kaydırarak keşfe başlayın.</p>
+        <h1 data-tr="İKÜ ROVERIUM KİMDİR?" data-en="WHO IS İKÜ ROVERIUM?">İKÜ ROVERIUM KİMDİR?</h1>
+<p data-tr="Aşağı kaydırarak keşfe başlayın." data-en="Scroll down to start exploring.">Aşağı kaydırarak keşfe başlayın.</p>
+
     </div>
     
     <div class="scroll-indicator" id="scrollDownButton">
@@ -46,10 +56,10 @@
 
 <section class="page-section" id="community-section">
   <div class="community-container">
-    <h1>Topluluğumuz</h1>
-    <p class="community-intro">
-      İstanbul Kültür Üniversitesi'nde bir öğrenci topluluğuyuz. Avrupa Rover Challenge'da yarışacak bir rover geliştirmeye çalışıyoruz. 
-     
+   <h1 data-tr="Topluluğumuz" data-en="Our Community">Topluluğumuz</h1>
+            <p class="community-intro" data-tr="İstanbul Kültür Üniversitesi'nde bir öğrenci topluluğuyuz. Avrupa Rover Challenge'da yarışacak bir rover geliştirmeye çalışıyoruz." data-en="We are a student community at Istanbul Kültür University, working to develop a rover to compete in the European Rover Challenge.">
+                İstanbul Kültür Üniversitesi'nde bir öğrenci topluluğuyuz. Avrupa Rover Challenge'da yarışacak bir rover geliştirmeye çalışıyoruz.
+            </p>
     </p>
 
     <div class="community-cards">
@@ -93,27 +103,28 @@
 </section>
 
 
-    <section class="page-section" id="contact">
-    <h2>Bizimle İletişime Geçin</h2>
-    <p>Sorularınız mı var? Ekibimize ulaşmak için aşağıdaki formu kullanın.</p>
-  
-    <form id="contactForm" action="https://formspree.io/f/xanpanew" method="POST">
-        <label>Ad Soyad</label><br><br>
-        <input type="text" name="name" required><br>
+   <section class="page-section" id="contact">
+        <h2 data-tr="Bizimle İletişime Geçin" data-en="Contact Us">Bizimle İletişime Geçin</h2>
+        <p data-tr="Sorularınız mı var? Ekibimize ulaşmak için aşağıdaki formu kullanın." data-en="Have questions? Use the form below to reach our team.">Sorularınız mı var? ... kullanın.</p>
 
-        <label>E-posta</label><br><br>
-        <input type="email" name="email" required><br>
+        <form id="contactForm" action="https://formspree.io/f/xanpanew" method="POST">
+            <label data-tr="Ad Soyad" data-en="Name">Ad Soyad</label><br><br>
+            <input type="text" name="name" required><br>
 
-        <label>Mesaj</label><br><br>
-        <textarea name="message" rows="5"></textarea><br><br>
+            <label data-tr="E-posta" data-en="Email">E-posta</label><br><br>
+            <input type="email" name="email" required><br>
 
-        <button type="submit">Gönder</button>
-        <p id="successMessage" style="display:none; color:whitesmoke; margin-top:15px;">
-            Mesajınız başarıyla gönderildi, teşekkür ederiz! 🚀
-        </p>
-    </form>
-</section>
+            <label data-tr="Mesaj" data-en="Message">Mesaj</label><br><br>
+            <textarea name="message" rows="5"></textarea><br><br>
 
+            <button type="submit" data-tr="Gönder" data-en="Send">Gönder</button>
+            <p id="successMessage" style="display:none; color:whitesmoke; margin-top:15px;"
+               data-tr="Mesajınız başarıyla gönderildi, teşekkür ederiz! 🚀"
+               data-en="Your message has been sent successfully, thank you! 🚀">
+               Mesajınız başarıyla gönderildi, teşekkür ederiz! 🚀
+            </p>
+        </form>
+    </section>
 
 
 
@@ -121,8 +132,11 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <p>&copy; 2025 İstanbul Kültür Üniversitesi Roverium Tüm Hakları Saklıdır.</p>
+     <footer class="footer">
+        <p data-tr="&copy; 2025 İstanbul Kültür Üniversitesi Roverium Tüm Hakları Saklıdır."
+           data-en="&copy; 2025 Istanbul Kültür University Roverium All Rights Reserved.">
+           &copy; 2025 İstanbul Kültür Üniversitesi Roverium Tüm Hakları Saklıdır.
+        </p>
     </footer>
 
 
@@ -387,6 +401,30 @@ items.forEach(item => {
             });
         }
     }
+</script>
+<script type="text/javascript">
+    const languageToggle = document.getElementById("language-toggle");
+
+function setLanguage(lang) {
+    document.querySelectorAll("[data-tr]").forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    localStorage.setItem("lang", lang);
+}
+
+// Sayfa yüklendiğinde kaydedilen dili uygula
+window.addEventListener("load", () => {
+    const savedLang = localStorage.getItem("lang") || "tr";
+    languageToggle.checked = savedLang === "en"; // EN seçiliyse toggle aktif olsun
+    setLanguage(savedLang);
+});
+
+// Toggle değiştiğinde dili değiştir
+languageToggle.addEventListener("change", () => {
+    const lang = languageToggle.checked ? "en" : "tr";
+    setLanguage(lang);
+});
+
 </script>
 </body>
 </html>

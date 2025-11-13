@@ -31,7 +31,7 @@ body {
     top: 0;
     left: 50%;
     transform: translateX(-50%); /* Ortalamayı sağlar */
-    width: 50%; /* Ortalanacak kutunun genişliği */
+    width: 55%; /* Ortalanacak kutunun genişliği */
     padding: 20px 50px;
     box-sizing: border-box;
     z-index: 10;
@@ -145,7 +145,7 @@ margin-right: 40px;
             transform: rotate(-135deg);
         }
        .scroll-indicator .arrow:hover{
-border-color:blue !important;
+border-color:#190966!important;
 
         }
 
@@ -445,3 +445,102 @@ margin-right: 10px;
     width: 95%;
   }
 }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.switch > span {
+  position: absolute;
+  top: 14px;
+  pointer-events: none;
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+  width: 50%;
+  text-align: center;
+}
+
+input.check-toggle-round-flat:checked ~ .off {
+  color: #0a205c;
+}
+
+input.check-toggle-round-flat:checked ~ .on {
+  color: white;
+}
+
+.switch > span.on {
+  left: 0;
+  padding-left: 2px;
+  color: #7d0909;
+}
+
+.switch > span.off {
+  right: 0;
+  padding-right: 4px;
+  color: #fff;
+}
+
+.check-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+
+.check-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+input.check-toggle-round-flat + label {
+  padding: 2px;
+  width: 97px;
+  height: 35px;
+  border-radius: 60px;
+}
+
+input.check-toggle-round-flat + label:before, input.check-toggle-round-flat + label:after {
+  display: block;
+  position: absolute;
+  content: "";
+}
+
+input.check-toggle-round-flat + label:before {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.33);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.1px);
+  -webkit-backdrop-filter: blur(7.1px);
+  border: 1px solid rgba(0, 0, 0, 0.24);
+}
+
+input.check-toggle-round-flat + label:after {
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  width: 48px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(14.2px);
+  -webkit-backdrop-filter: blur(14.2px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 52px;
+  transition: margin 0.2s;
+}
+
+input.check-toggle-round-flat:checked + label:after {
+  margin-left: 44px;
+}
+

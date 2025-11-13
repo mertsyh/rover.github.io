@@ -2,9 +2,7 @@
   max-width: 800px;
   margin: 30px auto;
 }
-.blog-post:hover{
-  transform: scaleY(2);
-}
+
 .blog-post {
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(10px);
