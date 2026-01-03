@@ -25,25 +25,25 @@ body {
 }
         }
  
-        /* --- HEADER STİLİ --- */
         .header {
           position: fixed;
     top: 0;
     left: 50%;
-    transform: translateX(-50%); /* Ortalamayı sağlar */
-    width: 55%; /* Ortalanacak kutunun genişliği */
+    transform: translateX(-50%); 
+    min-width: 55%; 
     padding: 20px 50px;
     box-sizing: border-box;
     z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 40px; /* İsteğe bağlı — güzel görünür */
+    border-radius: 40px; 
     margin-top: 30px;
-background: rgba(89, 79, 79, 0.12);
+background: rgba(0, 0, 0, 0.26);
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(9.2px);
--webkit-backdrop-filter: blur(9.2px);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+ 
 border: 1px solid rgba(89, 79, 79, 0.84);
  
         }
@@ -229,6 +229,7 @@ border-color:#190966!important;
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(1px);
+
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
   cursor:default;
 }
@@ -264,20 +265,36 @@ border-color:#190966!important;
 }
 
 
+/* MOBİL */
+@media (max-width: 768px) {
+    .team-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+
         /* --- MOBİL UYUMLULUK AYARLARI --- */
         @media (max-width: 768px) {
             .header {
-                padding: 15px 20px;
+             
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 text-align: center;
+                max-width: 80%;
+                left: 45%;
+                font-size: 10px;
+                margin: 20px;
+                padding: 5x 5px;
             }
+
             .header nav {
-                margin-top: 10px;
+                margin-top: 2px;
             }
             .header nav a {
-                margin: 0 10px;
+                margin: 0 2px;
             }
             .header .logo {
                 font-size: 1.2rem;
@@ -299,7 +316,17 @@ border-color:#190966!important;
                 margin-top: 50px;
                 width: 95%;
             }
+            
+        .footer {
+        width: 75%;
+
         }
+        }
+    
+.switch * {
+  display: none !important;
+}
+
         form {
   min-width: 550px;
   min-height: 400px;

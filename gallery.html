@@ -240,6 +240,74 @@ border: 1px solid rgba(89, 79, 79, 0.84);
                 height: auto;
             }
         }
+        /* === LIGHTBOX POPUP === */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 9999;
+}
+
+.lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+/* LIGHTBOX OKLAR */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    padding: 10px;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.arrow:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.arrow.left {
+    left: 30px;
+}
+
+.arrow.right {
+    right: 30px;
+}
+
+/* Mobilde okları biraz küçült */
+@media (max-width: 768px) {
+    .arrow {
+        font-size: 36px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -258,7 +326,7 @@ border: 1px solid rgba(89, 79, 79, 0.84);
            <a href="gallery.html">Galeri</a>
            <a href="index.html#contact" class="menu-item">İletişim</a>
             <a href="blog.html">Blog</a>
-            
+            <a href="news.html" class="menu-item" data-tr="Haberler" data-en="News">Haberler</a>
           
         </nav>
        
@@ -276,14 +344,71 @@ border: 1px solid rgba(89, 79, 79, 0.84);
                     <img src="foto2.JPG" alt="Galeri Fotoğrafı 2">
                 </div>
                 <div class="gallery-item">
-                    <img src="foto3.jpg" alt="Galeri Fotoğrafı 3">
+                    <img src="foto3.JPG" alt="Galeri Fotoğrafı 3">
                 </div>
                  <div class="gallery-item">
-                    <img src="foto4.jpg" alt="Galeri Fotoğrafı 3">
+                    <img src="foto4.JPG" alt="Galeri Fotoğrafı 3">
                 </div>
             </div>
         </div>
     </div>
+
+<div class="lightbox" id="lightbox">
+    <span class="arrow left" id="prev">&#10094;</span>
+    <img src="" alt="">
+    <span class="arrow right" id="next">&#10095;</span>
+</div>
+
+
 </body>
+<script>
+    const galleryImages = Array.from(document.querySelectorAll(".gallery-item img"));
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = lightbox.querySelector("img");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+
+    let currentIndex = 0;
+
+    function showImage(index) {
+        if (index < 0) index = galleryImages.length - 1;
+        if (index >= galleryImages.length) index = 0;
+
+        currentIndex = index;
+        lightboxImg.src = galleryImages[currentIndex].src;
+    }
+
+    galleryImages.forEach((img, index) => {
+        img.addEventListener("click", () => {
+            lightbox.classList.add("active");
+            showImage(index);
+        });
+    });
+
+    prevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showImage(currentIndex - 1);
+    });
+
+    nextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showImage(currentIndex + 1);
+    });
+
+    // Dışarı tıklayınca kapat
+    lightbox.addEventListener("click", () => {
+        lightbox.classList.remove("active");
+    });
+
+    // Klavye desteği
+    document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("active")) return;
+
+        if (e.key === "ArrowRight") showImage(currentIndex + 1);
+        if (e.key === "ArrowLeft") showImage(currentIndex - 1);
+        if (e.key === "Escape") lightbox.classList.remove("active");
+    });
+</script>
+
 
 </html>

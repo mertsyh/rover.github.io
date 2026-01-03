@@ -10,7 +10,6 @@
     body {
         margin: 0;
         font-family: 'Montserrat', sans-serif;
-        background: url("https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-018.jpg");
         background-size: cover;
         color: white;
         min-height: 100vh;
@@ -56,20 +55,25 @@ border: 1px solid rgba(89, 79, 79, 0.84);
 
     #blog-container {
         max-width: 900px;
-        margin: 120px auto 50px;
+        margin: 170px auto 50px;
         padding: 0 15px;
     }
 
     .blog-post {
-        background: rgba(255,255,255,0.05);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
+      
         padding: 30px;
         margin-bottom: 40px;
         text-align: left;
         opacity: 0;
         transform: translateY(30px);
         transition: all 0.5s ease-out;
+ background: rgba( 255, 255, 255, 0.1);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+border: 1px solid rgba(255, 255, 255, 0.3);
+
     }
 
     .blog-post h3 { margin-top: 0; color: #ffad60; }
@@ -91,10 +95,82 @@ border: 1px solid rgba(89, 79, 79, 0.84);
     display: block;    
     margin: 10px 0;       
     border-radius: 10px;  
-    object-fit: contain;  
+    object-fit: contain; }
+    .gradient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #000000, #000000);
+}
+
+/* Blob’lar */
+.gradient-bg span {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.6;
+}
+
+/* Renkler + animasyonlar */
+.gradient-bg span:nth-child(1) {
+  background: #000084;
+  animation: moveVertical 30s ease-in-out infinite;
+}
+
+.gradient-bg span:nth-child(2) {
+  background: #3e0d64;
+  animation: moveInCircle 20s linear infinite;
+}
+
+.gradient-bg span:nth-child(3) {
+  background: #1a0033;
+  animation: moveHorizontal 40s ease-in-out infinite;
+}
+
+.gradient-bg span:nth-child(4) {
+  background: #000000;
+  animation: moveInCircle 50s reverse infinite;
+}
+
+.gradient-bg span:nth-child(5) {
+  background: #2a0055;
+  animation: moveVertical 35s ease infinite;
+}
+
+/* Animasyonlar */
+@keyframes moveHorizontal {
+  0% { transform: translateX(-50%) translateY(-10%); }
+  50% { transform: translateX(50%) translateY(10%); }
+  100% { transform: translateX(-50%) translateY(-10%); }
+}
+
+@keyframes moveInCircle {
+  0% { transform: rotate(0deg) translateX(30vw); }
+  50% { transform: rotate(180deg) translateX(30vw); }
+  100% { transform: rotate(360deg) translateX(30vw); }
+}
+
+@keyframes moveVertical {
+  0% { transform: translateY(-50%); }
+  50% { transform: translateY(50%); }
+  100% { transform: translateY(-50%); }
+}
+
+
 </style>
 </head>
 <body>
+    <div class="gradient-bg">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
 <header class="header">
 
     <a href="index.html" class="logo">
@@ -106,6 +182,7 @@ border: 1px solid rgba(89, 79, 79, 0.84);
         <a href="gallery.html">Galeri</a>
         <a href="index.html#contact" class="menu-item">İletişim</a>
         <a href="blog.html">Blog</a>
+         <a href="news.html" class="menu-item" data-tr="Haberler" data-en="News">Haberler</a>
 
     </nav>
      <link rel="icon" href="logo.png" type="image/png">

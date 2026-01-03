@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROVERIUM | Uzay Haberleri</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="logo.png" type="image/png">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #0f0a20 0%, #00000a 100%);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* === HEADER === */
+.header {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    padding: 20px 50px;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 40px;
+    margin-top: 30px;
+    background: rgba(89, 79, 79, 0.12);
+    backdrop-filter: blur(9px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+}
+
+.header nav a:hover {
+    color: #ccc;
+}
+
+/* === CONTENT === */
+.container {
+    max-width: 1100px;
+    margin: 160px auto 80px;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.news-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-8px);
+}
+
+.news-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.news-content {
+    padding: 20px;
+}
+
+.news-content h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #ffad60;
+}
+
+.news-content p {
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.news-content small {
+    display: block;
+    margin-top: 10px;
+    color: #aaa;
+}
+
+.news-content a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #7aa2ff;
+    text-decoration: none;
+}
+
+.news-content a:hover {
+    text-decoration: underline;
+}
+
+/* === MOBİL === */
+@media (max-width: 768px) {
+    .header {
+        width: 90%;
+        padding: 15px 20px;
+        flex-direction: column;
+    }
+    .header nav {
+        margin-top: 10px;
+    }
+    .header nav a {
+        margin: 0 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="index.html" class="logo">
+        <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png">
+        İKÜ ROVERIUM
+    </a>
+    <nav>
+        <a href="index.html">Ana Sayfa</a>
+        <a href="gallery.html">Galeri</a>
+        <a href="index.html#contact">İletişim</a>
+        <a href="blog.html">Blog</a>
+        <a href="news.html">Haberler</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Uzay Haberleri</h1>
+    <div class="news-grid" id="newsGrid"></div>
+</div>
+
+<script>
+fetch("https://api.spaceflightnewsapi.net/v4/articles/?limit=9")
+  .then(res => res.json())
+  .then(data => {
+      const grid = document.getElementById("newsGrid");
+
+      grid.innerHTML = data.results.map(item => `
+        <div class="news-card">
+            <img src="${item.image_url}" alt="">
+            <div class="news-content">
+                <h3>${item.title}</h3>
+                <p>${item.summary.slice(0, 120)}...</p>
+                <small>${new Date(item.published_at).toLocaleDateString()}</small>
+                <a href="${item.url}" target="_blank">Haberi Oku →</a>
+            </div>
+        </div>
+      `).join("");
+  })
+  .catch(err => {
+      document.getElementById("newsGrid").innerHTML =
+        "<p>Haberler yüklenemedi.</p>";
+      console.error(err);
+  });
+</script>
+
+
+</body>
+</html>
