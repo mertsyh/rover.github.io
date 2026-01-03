@@ -168,29 +168,51 @@ h1 {
 </div>
 
 <script>
-fetch("https://api.spaceflightnewsapi.net/v4/articles/?limit=9")
-  .then(res => res.json())
-  .then(data => {
-      const grid = document.getElementById("newsGrid");
+const grid = document.getElementById("newsGrid");
 
-      grid.innerHTML = data.results.map(item => `
-        <div class="news-card">
-            <img src="${item.image_url}" alt="">
-            <div class="news-content">
-                <h3>${item.title}</h3>
-                <p>${item.summary.slice(0, 120)}...</p>
-                <small>${new Date(item.published_at).toLocaleDateString()}</small>
-                <a href="${item.url}" target="_blank">Haberi Oku →</a>
-            </div>
-        </div>
-      `).join("");
-  })
-  .catch(err => {
-      document.getElementById("newsGrid").innerHTML =
-        "<p>Haberler yüklenemedi.</p>";
-      console.error(err);
-  });
+const sources = [
+  {
+    name: "ESA",
+    url: "https://api.spaceflightnewsapi.net/v4/articles/?limit=4&search=European Space Agency"
+  },
+  {
+    name: "ERC",
+    url: "https://api.spaceflightnewsapi.net/v4/articles/?limit=3&search=European Rover"
+  },
+  {
+    name: "NASA",
+    url: "https://api.spaceflightnewsapi.net/v4/articles/?limit=3&search=NASA"
+  }
+];
+
+Promise.all(
+  sources.map(src =>
+    fetch(src.url)
+      .then(r => r.json())
+      .then(d => d.results.map(item => ({ ...item, source: src.name })))
+  )
+)
+.then(all => {
+  const news = all.flat();
+
+  grid.innerHTML = news.map(item => `
+    <div class="news-card">
+      <img src="${item.image_url}" alt="">
+      <div class="news-content">
+        <h3>[${item.source}] ${item.title}</h3>
+        <p>${item.summary.slice(0, 120)}...</p>
+        <small>${new Date(item.published_at).toLocaleDateString()}</small>
+        <a href="${item.url}" target="_blank">Kaynağa Git →</a>
+      </div>
+    </div>
+  `).join("");
+})
+.catch(err => {
+  grid.innerHTML = "<p>Haberler yüklenemedi.</p>";
+  console.error(err);
+});
 </script>
+
 
 
 </body>
