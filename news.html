@@ -17,6 +17,7 @@ body {
     overflow-x: hidden;
 }
 
+
 /* === HEADER === */
 .header {
     position: fixed;
@@ -35,6 +36,7 @@ body {
     backdrop-filter: blur(9px);
     border: 1px solid rgba(255,255,255,0.2);
 }
+
 
 .logo {
     display: flex;
@@ -128,6 +130,59 @@ h1 {
 .news-content a:hover {
     text-decoration: underline;
 }
+/* === LOADING SCENE === */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0f0a20 0%, #00000a 100%);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+    animation: fadeIn 1.2s ease;
+}
+
+.loader-content h2 {
+    margin-top: 20px;
+    font-weight: 700;
+    color: #ffad60;
+}
+
+.loader-content p {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* SPINNER */
+.spinner {
+    width: 70px;
+    height: 70px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top: 4px solid #7aa2ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 100px;
+}
+
+/* ANIMATIONS */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
 /* === MOBİL === */
 @media (max-width: 768px) {
@@ -166,54 +221,83 @@ h1 {
     <h1>Uzay Haberleri</h1>
     <div class="news-grid" id="newsGrid"></div>
 </div>
-
+<div id="loader">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <h2>Uzay Haberleri Yükleniyor</h2>
+    <p>NASA · ESA · ERC</p>
+  </div>
+</div>
 <script>
 const grid = document.getElementById("newsGrid");
+const loader = document.getElementById("loader");
 
+let loaderClosed = false;
+
+// ⏱️ Minimum 1 saniye loader
+setTimeout(() => {
+  closeLoader();
+}, 1000);
+
+function closeLoader() {
+  if (loaderClosed) return;
+  loaderClosed = true;
+  loader.classList.add("hidden");
+  document.body.style.overflow = "auto";
+}
+
+// Haber ekleme fonksiyonu
+function addNews(items, source) {
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "news-card";
+    card.innerHTML = `
+      <img src="${item.image_url || 'https://via.placeholder.com/400x200?text=No+Image'}">
+      <div class="news-content">
+        <h3>[${source}] ${item.title}</h3>
+        <p>${item.summary?.slice(0,120) || ""}...</p>
+        <small>${new Date(item.published_at).toLocaleDateString()}</small>
+        <a href="${item.url}" target="_blank">Kaynağa Git →</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // İlk içerik geldiyse loader kapat
+  closeLoader();
+}
+
+// Kaynaklar (bağımsız)
 const sources = [
   {
     name: "ESA",
     url: "https://api.spaceflightnewsapi.net/v4/articles/?limit=4&search=European Space Agency"
   },
   {
-    name: "ERC",
-    url: "https://api.spaceflightnewsapi.net/v4/articles/?limit=3&search=European Rover"
-  },
-  {
     name: "NASA",
     url: "https://api.spaceflightnewsapi.net/v4/articles/?limit=3&search=NASA"
+  },
+  {
+    name: "ERC",
+    url: "https://api.spaceflightnewsapi.net/v4/articles/?limit=3&search=European Rover"
   }
 ];
 
-Promise.all(
-  sources.map(src =>
-    fetch(src.url)
-      .then(r => r.json())
-      .then(d => d.results.map(item => ({ ...item, source: src.name })))
-  )
-)
-.then(all => {
-  const news = all.flat();
-
-  grid.innerHTML = news.map(item => `
-    <div class="news-card">
-      <img src="${item.image_url}" alt="">
-      <div class="news-content">
-        <h3>[${item.source}] ${item.title}</h3>
-        <p>${item.summary.slice(0, 120)}...</p>
-        <small>${new Date(item.published_at).toLocaleDateString()}</small>
-        <a href="${item.url}" target="_blank">Kaynağa Git →</a>
-      </div>
-    </div>
-  `).join("");
-})
-.catch(err => {
-  grid.innerHTML = "<p>Haberler yüklenemedi.</p>";
-  console.error(err);
+// Her kaynak TEK TEK yüklenir
+sources.forEach(src => {
+  fetch(src.url)
+    .then(r => r.json())
+    .then(d => {
+      if (d.results?.length) {
+        addNews(d.results, src.name);
+      }
+    })
+    .catch(err => console.warn(`${src.name} yüklenemedi`, err));
 });
 </script>
 
 
-
 </body>
+
+
 </html>
