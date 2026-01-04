@@ -1,4 +1,4 @@
-const languageToggle = document.getElementById("language-toggle");
+
 
 function setLanguage(lang) {
   document.querySelectorAll("[data-tr]").forEach(el => {
@@ -25,3 +25,4 @@ if (languageToggle) {
     setLanguage(lang);
   });
 }
+
