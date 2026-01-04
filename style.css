@@ -25,61 +25,8 @@ body {
 }
         }
  
-        .header {
-          position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%); 
-    min-width: 55%; 
-    padding: 20px 50px;
-    box-sizing: border-box;
-    z-index: 10;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 40px; 
-    margin-top: 30px;
-background: rgba(0, 0, 0, 0.26);
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5px);
--webkit-backdrop-filter: blur(5px);
- 
-border: 1px solid rgba(89, 79, 79, 0.84);
- 
-        }
-       
-        .header .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-            color: white;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header .logo:hover {
-            color: #ccc;
-        }
-        .header .logo img {
-            height: 40px;
-            width: auto;
-            transition: transform 0.3s;
-        }
-        .header .logo:hover img {
-            transform: scale(1.1);
-        }
-        .header nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-        .header nav a:hover {
-            color: #ccc;
-        }
 
+       
         /* Tüm içerik bölümleri için temel stil */
         .page-section {
             width: 100%;
@@ -316,15 +263,14 @@ border-color:#190966!important;
                 margin-top: 50px;
                 width: 95%;
             }
-            
+
         .footer {
         width: 75%;
-
         }
         }
     
 .switch * {
-  display: none !important;
+  display: visible;
 }
 
         form {
@@ -393,39 +339,7 @@ margin-right: 10px;
     button:hover::before {
      width: 100%;
     }
-    .menu {
-    position: relative;
-    display: flex;
-    gap: 30px;
-}
-
-.menu-item {
-    position: relative;
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    padding: 5px 0;
-    transition: color 0.3s;
-}
-
-.menu-item:hover {
-    color: #ccc;
-}
-
-.menu-indicator {
-    position: absolute;
-    bottom: 0;
-    height: 3px;
-    width: 0;
-    background: #fff;
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.menu-item.active ~ .menu-indicator {
-    width: calc(var(--width));
-    left: calc(var(--left));
-}
+ 
 
     /* --- LOADING EKRANI --- */
 #loading-screen {

@@ -41,32 +41,7 @@ form.addEventListener("submit", async (e) => {
         alert("Bir hata oluştu, lütfen tekrar deneyin.");
     }
 });
-const menu = document.querySelector('.menu');
-const items = document.querySelectorAll('.menu-item');
-const indicator = document.querySelector('.menu-indicator');
 
-function moveIndicator(el) {
-    const rect = el.getBoundingClientRect();
-    const parentRect = menu.getBoundingClientRect();
-    const left = rect.left - parentRect.left;
-    const width = rect.width;
-
-    indicator.style.left = `${left}px`;
-    indicator.style.width = `${width}px`;
-}
-
-// Başlangıçta aktif link
-const activeItem = document.querySelector('.menu-item.active');
-moveIndicator(activeItem);
-
-// Tıklayınca aktif değişsin
-items.forEach(item => {
-    item.addEventListener('click', e => {
-        items.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        moveIndicator(item);
-    });
-});
 
   
     const scene = new THREE.Scene();
@@ -271,3 +246,4 @@ languageToggle.addEventListener("change", () => {
     const lang = languageToggle.checked ? "en" : "tr";
     setLanguage(lang);
 });
+

@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
    <link rel="icon" href="logo.png" type="image/png">
+    <link href="newsheader.css" rel="stylesheet">
+
 </head>
 <body>
  
@@ -16,11 +18,11 @@
 </div>
 
     <header class="header">
-        <a href="#" class="logo">
-            <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="İKÜ ROVERIUM Logo">
-            İKÜ ROVERIUM
-        </a>
-        <center>
+  <a href="index.html" class="logo">
+    <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png">
+    İKÜ ROVERIUM
+  </a>
+ <center>
   <div class="switch">
     <input id="language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox">
     <label for="language-toggle"></label>
@@ -28,17 +30,22 @@
     <span class="off">EN</span>
   </div>
 </center>
+  <!-- Hamburger -->
+  <div class="menu-toggle" id="menuToggle">
+    <span id="first"></span>
+    <span></span>
+    <span></span>
+  </div>
 
-       <nav class="menu">
-   <a href="#" class="menu-item active" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a>
-            <a href="gallery.html" class="menu-item" data-tr="Galeri" data-en="Gallery">Galeri</a>
-            <a href="index.html#contact" class="menu-item" data-tr="İletişim" data-en="Contact">İletişim</a>
-            <a href="blog.html" class="menu-item" data-tr="Blog" data-en="Blog">Blog</a>
-                 <a href="news.html" class="menu-item" data-tr="Haberler" data-en="News">Haberler</a>
-            <div class="menu-indicator"></div>
-</nav>
+  <nav id="mobileNav">
+  <a href="index.html" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a>
+<a href="gallery.html" data-tr="Galeri" data-en="Gallery">Galeri</a>
+<a href="index.html#contact" data-tr="İletişim" data-en="Contact">İletişim</a>
+<a href="blog.html" data-tr="Blog" data-en="Blog">Blog</a>
+<a href="news.html" data-tr="Haberler" data-en="News">Haberler</a>
 
-    </header>
+  </nav>
+</header>
 
     <canvas id="mars"></canvas>
 
@@ -174,5 +181,17 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
+    <script src="language.js"></script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const mobileNav = document.getElementById("mobileNav");
+
+menuToggle.addEventListener("click", () => {
+  mobileNav.classList.toggle("active");
+  menuToggle.classList.toggle("active");
+});
+</script>
+
 </body>
 </html>

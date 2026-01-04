@@ -6,161 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ROVERIUM | Blog</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-<style>
-    body {
-        margin: 0;
-        font-family: 'Montserrat', sans-serif;
-        background-size: cover;
-        color: white;
-        min-height: 100vh;
-    }
-    .header {
-                position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%); /* Ortalamayı sağlar */
-    width: 50%; /* Ortalanacak kutunun genişliği */
-    padding: 20px 50px;
-    box-sizing: border-box;
-    z-index: 10;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 40px; /* İsteğe bağlı — güzel görünür */
-    margin-top: 30px;
-/* From https://css.glass */
-background: rgba(89, 79, 79, 0.12);
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(9.2px);
--webkit-backdrop-filter: blur(9.2px);
-border: 1px solid rgba(89, 79, 79, 0.84);
-    }
-    .header .logo {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: white;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .header .logo img { height: 40px; width:auto; }
-    .header nav a {
-        color: white;
-        text-decoration: none;
-        margin-left: 30px;
-        font-size: 1rem;
-    }
-    .header nav a:hover { color: #ccc; }
-
-    #blog-container {
-        max-width: 900px;
-        margin: 170px auto 50px;
-        padding: 0 15px;
-    }
-
-    .blog-post {
-      
-        padding: 30px;
-        margin-bottom: 40px;
-        text-align: left;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.5s ease-out;
- background: rgba( 255, 255, 255, 0.1);
-backdrop-filter: blur(20px);
--webkit-backdrop-filter: blur(20px);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-border: 1px solid rgba(255, 255, 255, 0.3);
-
-    }
-
-    .blog-post h3 { margin-top: 0; color: #ffad60; }
-    .blog-post small { color: #aaa; display: block; margin-bottom: 10px; }
-
-    .visible { opacity: 1 !important; transform: translateY(0) !important; }
-
-    @media (max-width: 768px) {
-        .header { flex-direction: column; padding: 15px 20px; }
-        .header nav { margin-top: 10px; }
-        .header nav a { margin: 0 10px; }
-        #blog-container { margin-top: 100px; }
-    }
-    .blog-post img {
-    max-width: 100%;      
-    max-height: 400px;    
-    width: auto;
-    height: auto;
-    display: block;    
-    margin: 10px 0;       
-    border-radius: 10px;  
-    object-fit: contain; }
-    .gradient-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  background: radial-gradient(circle at center, #000000, #000000);
-}
-
-/* Blob’lar */
-.gradient-bg span {
-  position: absolute;
-  width: 60vmax;
-  height: 60vmax;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.6;
-}
-
-/* Renkler + animasyonlar */
-.gradient-bg span:nth-child(1) {
-  background: #000084;
-  animation: moveVertical 30s ease-in-out infinite;
-}
-
-.gradient-bg span:nth-child(2) {
-  background: #3e0d64;
-  animation: moveInCircle 20s linear infinite;
-}
-
-.gradient-bg span:nth-child(3) {
-  background: #1a0033;
-  animation: moveHorizontal 40s ease-in-out infinite;
-}
-
-.gradient-bg span:nth-child(4) {
-  background: #000000;
-  animation: moveInCircle 50s reverse infinite;
-}
-
-.gradient-bg span:nth-child(5) {
-  background: #2a0055;
-  animation: moveVertical 35s ease infinite;
-}
-
-/* Animasyonlar */
-@keyframes moveHorizontal {
-  0% { transform: translateX(-50%) translateY(-10%); }
-  50% { transform: translateX(50%) translateY(10%); }
-  100% { transform: translateX(-50%) translateY(-10%); }
-}
-
-@keyframes moveInCircle {
-  0% { transform: rotate(0deg) translateX(30vw); }
-  50% { transform: rotate(180deg) translateX(30vw); }
-  100% { transform: rotate(360deg) translateX(30vw); }
-}
-
-@keyframes moveVertical {
-  0% { transform: translateY(-50%); }
-  50% { transform: translateY(50%); }
-  100% { transform: translateY(-50%); }
-}
-
-
-</style>
+<link href="blog.css" rel="stylesheet">
+<link href="newsheader.css" rel="stylesheet">
 </head>
 <body>
     <div class="gradient-bg">
@@ -171,21 +18,27 @@ border: 1px solid rgba(255, 255, 255, 0.3);
   <span></span>
 </div>
 
-<header class="header">
+  <header class="header">
+  <a href="index.html" class="logo">
+    <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png">
+    İKÜ ROVERIUM
+  </a>
 
-    <a href="index.html" class="logo">
-        <img src="https://edizos.github.io/RoveriumWeb/images/komple_penege.png" alt="Logo">
-        İKÜ ROVERIUM
-    </a>
-    <nav>
-        <a href="index.html">Ana Sayfa</a>
-        <a href="gallery.html">Galeri</a>
-        <a href="index.html#contact" class="menu-item">İletişim</a>
-        <a href="blog.html">Blog</a>
-         <a href="news.html" class="menu-item" data-tr="Haberler" data-en="News">Haberler</a>
+  <!-- Hamburger -->
+  <div class="menu-toggle" id="menuToggle">
+    <span id="first"></span>
+    <span></span>
+    <span></span>
+  </div>
 
-    </nav>
-     <link rel="icon" href="logo.png" type="image/png">
+  <nav id="mobileNav">
+   <a href="index.html" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a>
+<a href="gallery.html" data-tr="Galeri" data-en="Gallery">Galeri</a>
+<a href="index.html#contact" data-tr="İletişim" data-en="Contact">İletişim</a>
+<a href="blog.html" data-tr="Blog" data-en="Blog">Blog</a>
+<a href="news.html" data-tr="Haberler" data-en="News">Haberler</a>
+
+  </nav>
 </header>
 
 <section id="blog-container"></section>
@@ -255,6 +108,17 @@ async function loadPosts() {
 }
 
 loadPosts();
+</script>
+<script src="language.js"></script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const mobileNav = document.getElementById("mobileNav");
+
+menuToggle.addEventListener("click", () => {
+  mobileNav.classList.toggle("active");
+  menuToggle.classList.toggle("active");
+});
 </script>
 </body>
 </html>
