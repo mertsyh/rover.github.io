@@ -3,13 +3,13 @@ window.addEventListener("load", () => {
   const alreadyVisited = localStorage.getItem("visited");
 
   if (!alreadyVisited) {
-    // İlk ziyaret — loading ekranı göster
+
     setTimeout(() => {
       loadingScreen.classList.add("hidden");
       localStorage.setItem("visited", "true");
     }, 1500);
   } else {
-    // Daha önce ziyaret edilmiş — loading ekranını direkt gizle
+
     loadingScreen.classList.add("hidden");
   }
 });
@@ -18,7 +18,7 @@ const form = document.getElementById("contactForm");
 const successMessage = document.getElementById("successMessage");
 
 form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // Sayfa yenilenmesini engelle
+    e.preventDefault();
     const formData = new FormData(form);
 
     try {
@@ -49,10 +49,9 @@ form.addEventListener("submit", async (e) => {
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mars"), antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // --- Doku Yükleyici ---
+  
     const textureLoader = new THREE.TextureLoader();
 
-    // --- MARS KÜRESİ VE DOKUSU ---
     const geometry = new THREE.SphereGeometry(10, 64, 64);
     const marsTexture = textureLoader.load("mars.jpg", () => {
         initAnimations();
@@ -61,7 +60,7 @@ form.addEventListener("submit", async (e) => {
     const mars = new THREE.Mesh(geometry, material);
     scene.add(mars);
 
-    // --- ATMOSFER KÜRESİ ---
+
     const atmosphereGeometry = new THREE.SphereGeometry(10.2, 64, 64);
     const atmosphereMaterial = new THREE.MeshStandardMaterial({
         color: 0x909090,
@@ -73,7 +72,7 @@ form.addEventListener("submit", async (e) => {
     scene.add(atmosphere);
     atmosphere.position.copy(mars.position);
 
-    // --- YILDIZLAR OLUŞTURMA ---
+
     function addStars() {
         const starsGeometry = new THREE.BufferGeometry();
         const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
@@ -91,25 +90,24 @@ form.addEventListener("submit", async (e) => {
     }
     const stars = addStars();
 
-    // --- IŞIKLANDIRMA ---
     const light = new THREE.PointLight(0xffffff, 1.5);
     light.position.set(20, 20, 50);
     scene.add(light);
     const ambientLight = new THREE.AmbientLight(0x404040);
     scene.add(ambientLight);
 
-    // --- KAMERA KONUMU ---
+ 
     camera.position.set(0, 0, 30);
     camera.lookAt(mars.position);
 
-    // --- ANIMASYON DÖNGÜSÜ ---
+ 
     function animate() {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
     }
     animate();
 
-    // --- PENCERE BOYUTU DEĞİŞTİRME FONKSİYONU ---
+
     window.addEventListener("resize", () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -140,11 +138,10 @@ form.addEventListener("submit", async (e) => {
         marsTimeline.to([mars.rotation, atmosphere.rotation], { x: 1, ease: "power2.inOut" }, 0); 
         
       marsTimeline.to([mars.scale, atmosphere.scale], {
-    x: 10, y: 10, z: 10, // Değerleri 50'den 15'e düşürdük.
+    x: 10, y: 10, z: 10, 
     ease: "power2.in"
 }, "<0.2");
 
-        // Aşama 3: Büyüme animasyonuyla aynı anda şeffaflaşarak kaybolur.
         marsTimeline.to([mars.material, atmosphere.material], {
             opacity: 0,
             ease: "power2.in"
@@ -234,16 +231,17 @@ function setLanguage(lang) {
     localStorage.setItem("lang", lang);
 }
 
-// Sayfa yüklendiğinde kaydedilen dili uygula
+
 window.addEventListener("load", () => {
     const savedLang = localStorage.getItem("lang") || "tr";
-    languageToggle.checked = savedLang === "en"; // EN seçiliyse toggle aktif olsun
+    languageToggle.checked = savedLang === "en"; 
     setLanguage(savedLang);
 });
 
-// Toggle değiştiğinde dili değiştir
+
 languageToggle.addEventListener("change", () => {
     const lang = languageToggle.checked ? "en" : "tr";
     setLanguage(lang);
 });
+
 
