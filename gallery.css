@@ -131,7 +131,7 @@
             }
         }
         
-        /* --- MOBİL UYUMLULUK AYARLARI --- */
+
         @media (max-width: 768px) {
          
             h1 {
@@ -142,7 +142,7 @@
             }
             .gallery-wrapper {
                 padding-top: 120px;
-                background: linear-gradient(135deg, #0f0a20 0%, #00000a 100%); /* Mobil için daha koyu bir arka plan */
+                background: linear-gradient(135deg, #0f0a20 0%, #00000a 100%); 
             }
             .gallery-bar {
                 width: 95%;
@@ -156,7 +156,7 @@
                 height: 120px;
             }
             .bg-shape {
-                display: none; /* Mobil cihazlarda şekilleri gizle */
+                display: none; 
             }
         }
 
@@ -166,7 +166,7 @@
                 height: auto;
             }
         }
-        /* === LIGHTBOX POPUP === */
+ 
 .lightbox {
     position: fixed;
     inset: 0;
@@ -200,7 +200,7 @@
         transform: scale(1);
     }
 }
-/* LIGHTBOX OKLAR */
+
 .arrow {
     position: absolute;
     top: 50%;
@@ -233,3 +233,4 @@
         font-size: 36px;
     }
 }
+
