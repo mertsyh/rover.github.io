@@ -27,7 +27,7 @@ body {
  
 
        
-        /* Tüm içerik bölümleri için temel stil */
+      
         .page-section {
             width: 100%;
             min-height: 100vh;
@@ -37,10 +37,10 @@ body {
             align-items: center;
             padding: 50px 20px;
             box-sizing: border-box;
-            /* Başlangıçta görünmez olması için GSAP bu stili yönetecek */
+
         }
         .page-section.content {
-             padding-top: 150px; /* Header'ın arkasında kalmaması için */
+             padding-top: 150px; 
         }
 
         .footer {
@@ -122,7 +122,7 @@ border-color:#190966!important;
             animation: bounce-up 2s infinite;
         }
 
-        /* Topluluk barı için cam efekti stilleri */
+    
         .community-bar {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -138,7 +138,7 @@ border-color:#190966!important;
             align-items: center;
             margin: 0 auto;
         }
-        /* --- Topluluk Kartları (Yeni Tasarım) --- */
+
 #community-section {
   padding: 100px 10%;
   text-align: center;
@@ -212,7 +212,7 @@ border-color:#190966!important;
 }
 
 
-/* MOBİL */
+
 @media (max-width: 768px) {
     .team-cards {
         flex-direction: column;
@@ -222,7 +222,7 @@ border-color:#190966!important;
 
 
 
-        /* --- MOBİL UYUMLULUK AYARLARI --- */
+       
         @media (max-width: 768px) {
             .header {
              
@@ -341,7 +341,6 @@ margin-right: 10px;
     }
  
 
-    /* --- LOADING EKRANI --- */
 #loading-screen {
   position: fixed;
   top: 0;
@@ -366,7 +365,6 @@ margin-right: 10px;
   visibility: hidden;
 }
 
-/* Basit dönen daire animasyonu */
 .spinner {
   width: 60px;
   height: 60px;
@@ -484,4 +482,5 @@ input.check-toggle-round-flat + label:after {
 input.check-toggle-round-flat:checked + label:after {
   margin-left: 44px;
 }
+
 
